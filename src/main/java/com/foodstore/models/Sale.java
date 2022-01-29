@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "sales")
 public class Sale extends Stock {
 
+    @Column(nullable = false)
     private LocalDateTime dateOfSale; // Дата на продажба
 
 }

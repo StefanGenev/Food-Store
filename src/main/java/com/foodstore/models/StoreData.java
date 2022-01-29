@@ -17,10 +17,13 @@ public class StoreData {
     @Column(nullable = false, updatable = false)
     private Long id; // Идентификатор на параметър
 
+    @Column(nullable = false)
     private String name; // Найменование на параметър
 
+    @Column(nullable = false)
     private DataType dataType; // Тип на данна
 
+    @Column(nullable = false)
     private String value; // Стойност
 
 }

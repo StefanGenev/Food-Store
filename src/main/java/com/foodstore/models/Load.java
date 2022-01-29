@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "loads")
 public class Load extends Stock {
 
+    @Column(nullable = false)
     private LocalDateTime dateOfLoading; // Дата на зареждане
 
 }

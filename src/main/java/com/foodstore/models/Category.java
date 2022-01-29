@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "categories")
 public class Category { // Категория за продукти
 
 

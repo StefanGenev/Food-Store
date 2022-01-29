@@ -23,5 +23,6 @@ public class Stock {
     @OneToOne
     private Product product; // Продукт
 
+    @Column(nullable = false)
     private Double quantity; // Количество
 }
