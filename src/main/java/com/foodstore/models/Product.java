@@ -15,7 +15,7 @@ public class Product { // Продукт в магазина
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Long id; // Уникален идентификатор за записа
 
     private String productName; // Име на продукта
@@ -31,16 +31,18 @@ public class Product { // Продукт в магазина
     @JoinColumn(name="category_id", nullable=false)
     private Category category; // Категория на продукта
 
-    private double buyPrice; // Цена на зареждане - при зареждане на продукта
+    @Column(nullable = false)
+    private double loadPrice; // Цена на зареждане - при зареждане на продукта
 
+    @Column(nullable = false)
     private double sellPrice; // Цена на продажба - при продаване на продукта
 
-    Product(String productName, Manufacturer manufacturer, Unit unit, Category category, double buyPrice, double sellPrice){
+    Product(String productName, Manufacturer manufacturer, Unit unit, Category category, double loadPrice, double sellPrice){
         this.productName = productName;
         this.manufacturer = manufacturer;
         this.unit = unit;
         this.category = category;
-        this.buyPrice = buyPrice;
+        this.loadPrice = loadPrice;
         this.sellPrice = sellPrice;
     }
 

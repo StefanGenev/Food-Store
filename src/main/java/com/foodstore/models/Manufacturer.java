@@ -16,9 +16,10 @@ import javax.persistence.*;
 public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Long id; // Уникален код на фирма - производител
 
+    @Column(nullable = false)
     private String manufacturerName; // Име на фирмата
 
     Manufacturer(String manufacturerName){

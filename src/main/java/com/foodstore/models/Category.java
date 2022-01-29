@@ -16,9 +16,10 @@ public class Category { // Категория за продукти
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Long id; // Уникален идентификатор за записа
 
+    @Column(nullable = false)
     private String categoryName; // Име на категорията
 
     Category(String categoryName) { // Конструктор по име на категория

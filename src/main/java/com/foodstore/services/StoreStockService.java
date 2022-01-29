@@ -70,7 +70,7 @@ public class StoreStockService {
             return false;
 
         double cash = Double.parseDouble(storeData.get().getValue());
-        cash += load.getQuantity() * load.getProduct().getBuyPrice();
+        cash += load.getQuantity() * load.getProduct().getLoadPrice();
 
         storeData.get().setValue(Double.toString(cash));
 
