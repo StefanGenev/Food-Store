@@ -1,4 +1,4 @@
-package com.foodstore.Food.Store.models;
+package com.foodstore.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,16 +6,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+// Табличен клас за пройзводител
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 public class Manufacturer {
-
     @Id
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-    private long id; // Уникален код на фирма - производител
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id; // Уникален код на фирма - производител
 
     private String manufacturerName; // Име на фирмата
 

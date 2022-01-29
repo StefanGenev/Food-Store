@@ -1,4 +1,4 @@
-package com.foodstore.Food.Store.models;
+package com.foodstore.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +12,10 @@ import javax.persistence.*;
 @Entity
 public class Category { // Категория за продукти
 
+
     @Id
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id; // Уникален идентификатор за записа
 
     private String categoryName; // Име на категорията

@@ -1,4 +1,4 @@
-package com.foodstore.Food.Store.models;
+package com.foodstore.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,20 +10,25 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name = "products")
 public class Product { // Продукт в магазина
 
     @Id
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id; // Уникален идентификатор за записа
 
     private String productName; // Име на продукта
 
+    @ManyToOne
+    @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer; // Фирма - производител на продукта
 
     @Enumerated(EnumType.STRING)
     private Unit unit; // Мерна единица (кг., литър, ...)
 
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable=false)
     private Category category; // Категория на продукта
 
     private double buyPrice; // Цена на зареждане - при зареждане на продукта
