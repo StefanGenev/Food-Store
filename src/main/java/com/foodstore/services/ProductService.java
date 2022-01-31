@@ -37,11 +37,20 @@ public class ProductService { // клас който обслужва бизне
     }
 
     public Product updateProduct(Product product) { // редактира продукт
-        if(this.productRepo.findById(product.getId()).isEmpty()) {
+        if (this.productRepo.findById(product.getId()).isEmpty()) {
             throw new NotFoundException(String.format("Не съществува такъв продукт: %s."
                     , product.getProductName()));
         }
         return this.productRepo.saveAndFlush(product);
     }
+
+    public Product addProduct(Product product) { // добавя продукт в базата
+        return this.productRepo.saveAndFlush(product);
+    }
+
+    public void deleteProduct(Product product){
+        this.productRepo.delete(product);
+    }
+
 
 }
