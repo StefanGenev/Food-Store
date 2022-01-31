@@ -1,12 +1,14 @@
 package com.foodstore.services;
 
 import com.foodstore.exceptions.NotFoundException;
+import com.foodstore.models.Product;
 import com.foodstore.models.Sale;
 import com.foodstore.repositories.SaleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 // Клас за бизнес логика на продажбите
 
@@ -20,6 +22,10 @@ public class SaleService {
 
     public Sale addSale(Sale sale){
         return saleRepository.saveAndFlush(sale);
+    }
+
+    public List<Sale> findSaleByProduct(Product product) { // търси продажба на даден продукт
+        return this.saleRepository.findSaleByProduct(product);
     }
 
     public List<Sale> findAllSales(){

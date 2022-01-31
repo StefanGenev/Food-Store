@@ -1,5 +1,6 @@
 package com.foodstore.repositories;
 
+import com.foodstore.models.Product;
 import com.foodstore.models.StoreStock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface StoreStockRepository extends JpaRepository<StoreStock, Long> {
     Optional<StoreStock> findStoreStockById(Long id);
+
+    Optional<StoreStock> findStoreStockByProduct(Product product);
 
     void deleteStoreStockById(Long id);
 }

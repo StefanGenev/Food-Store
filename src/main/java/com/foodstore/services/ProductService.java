@@ -1,9 +1,11 @@
 package com.foodstore.services;
 
+import com.foodstore.exceptions.InvalidDeleteException;
 import com.foodstore.exceptions.NotFoundException;
 import com.foodstore.models.Category;
 import com.foodstore.models.Manufacturer;
 import com.foodstore.models.Product;
+import com.foodstore.models.StoreStock;
 import com.foodstore.repositories.ProductRepo;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,15 @@ import java.util.List;
 public class ProductService { // клас който обслужва бизнес логика за продуктите
 
     private final ProductRepo productRepo;
+    private final LoadService loadService;
+    private final SaleService saleService;
+    private final StoreStockService storeStockService;
 
-    public ProductService(ProductRepo productRepo) {
+    public ProductService(ProductRepo productRepo, LoadService loadService, SaleService saleService, StoreStockService storeStockService) {
         this.productRepo = productRepo;
+        this.loadService = loadService;
+        this.saleService = saleService;
+        this.storeStockService = storeStockService;
     }
 
     public List<Product> getAllProducts() { // взима всички продутки от базата
@@ -45,12 +53,31 @@ public class ProductService { // клас който обслужва бизне
     }
 
     public Product addProduct(Product product) { // добавя продукт в базата
+        if(this.storeStockService.findStoreStockByProduct(product).isEmpty()){
+            StoreStock storeStock = new StoreStock(product, 0d);
+            this.storeStockService.addStoreStock(storeStock);
+        }
         return this.productRepo.saveAndFlush(product);
     }
 
-    public void deleteProduct(Product product){
-        this.productRepo.delete(product);
-    }
+    public void deleteProduct(Product product) { // изтрива продукт
+        String errorMessage = "";
 
+        if (!this.loadService.findLoadByProduct(product).isEmpty()) {
+            errorMessage += String.format("Продуктът бива зареждан в магазина: %s.\n", product.getProductName());
+        }
+        if (!this.saleService.findSaleByProduct(product).isEmpty()) {
+            errorMessage += String.format("Има продажби на този продукт: %s.\n", product.getProductName());
+        }
+        if (this.storeStockService.findStoreStockByProduct(product).isPresent()) {
+            errorMessage += String.format("Има набор продукти от този тип в магазина: %s.\n", product.getProductName());
+        }
+
+        if (errorMessage.length() != 0) {
+            throw new InvalidDeleteException(errorMessage);
+        } else {
+            this.productRepo.delete(product);
+        }
+    }
 
 }

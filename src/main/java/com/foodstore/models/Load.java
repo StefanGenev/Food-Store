@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 @Table(name = "loads")
 public class Load extends Stock {
 
+    @ManyToOne
+    @JoinColumn(name="product_id", nullable=false)
+    private Product product; // Продукт
+
     @Column(nullable = false)
     private LocalDateTime dateOfLoading; // Дата на зареждане
 

@@ -1,10 +1,7 @@
 package com.foodstore.services;
 
 import com.foodstore.exceptions.NotFoundException;
-import com.foodstore.models.Load;
-import com.foodstore.models.Sale;
-import com.foodstore.models.StoreData;
-import com.foodstore.models.StoreStock;
+import com.foodstore.models.*;
 import com.foodstore.repositories.StoreDataRepository;
 import com.foodstore.repositories.StoreStockRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +26,10 @@ public class StoreStockService {
 
     public StoreStock addStoreStock(StoreStock storeStock){
         return storeStockRepository.saveAndFlush(storeStock);
+    }
+
+    public Optional<StoreStock> findStoreStockByProduct(Product product){
+        return this.storeStockRepository.findStoreStockByProduct(product);
     }
 
     public List<StoreStock> findAllStoreStocks(){
