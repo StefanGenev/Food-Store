@@ -20,9 +20,6 @@ public class Stock {
     @Column(name = "id", nullable = false)
     private Long id; // Идентификатор
 
-    @OneToOne
-    private Product product; // Продукт
-
     @Column(nullable = false)
     private Double quantity; // Количество
 }
