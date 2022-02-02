@@ -8,37 +8,34 @@
 <BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
     <top>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="1000.0">
-            <children>
-                <Label layoutX="764.0" layoutY="9.0" prefHeight="26.0" prefWidth="109.0" text="Каса: 363$" />
-                <Button fx:id="btnExit" layoutX="924.0" layoutY="3.0" mnemonicParsing="false" onAction="#exit" prefHeight="22.0" prefWidth="70.0" styleClass="background" text="Изход" textFill="#fff9f9" textOverrun="CLIP">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                    <effect>
-                        <DropShadow blurType="ONE_PASS_BOX" color="#00000091" />
-                    </effect>
-                </Button>
-            </children>
+            <Label layoutX="764.0" layoutY="9.0" prefHeight="26.0" prefWidth="109.0" text="Каса: 363$"/>
+            <Button fx:id="btnExit" layoutX="924.0" layoutY="3.0" mnemonicParsing="false" onAction="#exit"
+                    prefHeight="22.0" prefWidth="70.0" styleClass="background" text="Изход" textFill="#fff9f9"
+                    textOverrun="CLIP">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" color="#00000091"/>
+                </effect>
+            </Button>
         </AnchorPane>
     </top>
     <center>
         <VBox alignment="TOP_RIGHT" prefHeight="571.0" prefWidth="692.0" BorderPane.alignment="CENTER">
-            <children>
-                <HBox alignment="TOP_RIGHT" prefHeight="480.0" prefWidth="640.0">
-                    <children>
-                        <TabPane fx:id="tabPane" prefHeight="68.0" prefWidth="1039.0" tabClosingPolicy="UNAVAILABLE">
-                            <tabs>
-                                <Tab fx:id="mainStorePage" text="Магазин">
-                                    <fx:include source="productAvailabilityPage.fxml" />
-                                </Tab>
-                                <Tab fx:id="salesPage" text="Продажби">
-                                    <fx:include source="salesPage.fxml" />
-                                </Tab>
-                            </tabs>
-                        </TabPane>
-                    </children>
-                </HBox>
-            </children>
+            <HBox alignment="TOP_RIGHT" prefHeight="480.0" prefWidth="640.0">
+                <TabPane fx:id="tabPane" prefHeight="68.0" prefWidth="1039.0" tabClosingPolicy="UNAVAILABLE">
+                    <Tab text="Магазин">
+                        <fx:include source="productAvailabilityPage.fxml"/>
+                    </Tab>
+                    <Tab text="Продажби">
+                        <fx:include source="salesPage.fxml"/>
+                    </Tab>
+                    <Tab text="Зареждания">
+                        <fx:include source="loadsPage.fxml"/>
+                    </Tab>
+                </TabPane>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

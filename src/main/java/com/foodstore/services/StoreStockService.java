@@ -13,7 +13,7 @@ import java.util.Optional;
 // Клас за бизнес логика на магазин
 
 @Service
-public class StoreStockService {
+public class StoreStockService implements BaseCRUDServiceInterface<StoreStock> {
     public static final String CASH_PARAMETER_NAME = "CASH";
 
     private final StoreStockRepository storeStockRepository; // Магазин - стоки
@@ -78,5 +78,10 @@ public class StoreStockService {
         this.storeDataRepository.saveAndFlush(storeData.get());
 
         return true;
+    }
+
+    @Override
+    public List<StoreStock> findAllRecords() {
+        return findAllStoreStocks();
     }
 }

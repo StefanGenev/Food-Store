@@ -13,7 +13,7 @@ import java.util.Optional;
 // Клас за бизнес логика на зареждания
 
 @Service
-public class LoadService {
+public class LoadService implements BaseCRUDServiceInterface<Load> {
     private final LoadRepository loadRepository;
 
     public LoadService(LoadRepository loadRepository) {
@@ -44,5 +44,10 @@ public class LoadService {
     @Transactional
     public void deleteLoad(Long id){
         this.loadRepository.deleteLoadById(id);
+    }
+
+    @Override
+    public List<Load> findAllRecords() {
+        return findAllLoads();
     }
 }

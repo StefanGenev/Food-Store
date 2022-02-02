@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.VBox?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.foodstore.controllers.SalesPageController"
+           fx:controller="com.foodstore.controllers.LoadsPageController"
            prefHeight="400.0" prefWidth="600.0">
     <TableView fx:id="tableView" prefHeight="600.0" prefWidth="985.0" tableMenuButtonVisible="true">
         <columns>
-            <TableColumn fx:id="colSaleId" maxWidth="700.0" prefWidth="20.0" text="ID"/>
+            <TableColumn fx:id="colLoadId" maxWidth="700.0" prefWidth="20.0" text="ID"/>
             <TableColumn fx:id="colProductName" maxWidth="4000.0" prefWidth="75.0" text="Product"/>
             <TableColumn fx:id="colQuantity" maxWidth="4000.0" prefWidth="75.0" text="Quantity"/>
-            <TableColumn fx:id="colDateOfSale" maxWidth="4000.0" prefWidth="75.0" text="Date of Sale"/>
+            <TableColumn fx:id="colDateOfLoading" maxWidth="4000.0" prefWidth="75.0" text="Date of Loading"/>
         </columns>
         <VBox.margin>
             <Insets left="10.0" right="5.0"/>

@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 // Клас за бизнес логика на продажбите
 
 @Service
-public class SaleService {
+public class SaleService implements BaseCRUDServiceInterface<Sale> {
     private final SaleRepository saleRepository;
 
     public SaleService(SaleRepository saleRepository) {
@@ -32,11 +31,11 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
-    public Sale updateVinyl(Sale sale){
+    public Sale updateSale(Sale sale){
         return saleRepository.saveAndFlush(sale);
     }
 
-    public Sale findVinylById(Long id){
+    public Sale findSaleById(Long id){
         return saleRepository.findSaleById(id)
                 .orElseThrow(() -> new NotFoundException("Не е намерена продажба с идентификатор: " + id));
     }
@@ -44,5 +43,10 @@ public class SaleService {
     @Transactional
     public void deleteSale(Long id){
         this.saleRepository.deleteSaleById(id);
+    }
+
+    @Override
+    public List<Sale> findAllRecords() {
+        return findAllSales();
     }
 }

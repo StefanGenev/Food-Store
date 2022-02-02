@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService { // клас който обслужва бизнес логика за категориите
+public class CategoryService implements BaseCRUDServiceInterface<Category> { // клас който обслужва бизнес логика за категориите
 
     private final CategoryRepo categoryRepo;
     private final ProductService productService;
@@ -20,7 +20,7 @@ public class CategoryService { // клас който обслужва бизн�
         this.productService = productService;
     }
 
-    public List<Category> getAllCategories(List<Category> categoryList) { // взима всички категории
+    public List<Category> getAllCategories() { // взима всички категории
         return this.categoryRepo.findAll();
     }
 
@@ -53,4 +53,8 @@ public class CategoryService { // клас който обслужва бизн�
         }
     }
 
+    @Override
+    public List<Category> findAllRecords() {
+        return getAllCategories();
+    }
 }

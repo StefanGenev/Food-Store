@@ -1,37 +1,45 @@
 package com.foodstore.controllers;
 
-// Контролер за страница Магазин - наличност на продукти
-
+import com.foodstore.models.Load;
 import com.foodstore.models.Product;
-import com.foodstore.models.StoreStock;
 import com.foodstore.utils.ProductTableCell;
+import com.foodstore.utils.StringDateConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import org.springframework.stereotype.Component;
 
-// Контролер за страница с наличност на продукти
+import java.time.LocalDateTime;
+
+// Контролер за страница със зареждания
 
 @Component
-public class ProductAvailabilityPageController extends BaseTablePageController<StoreStock> {
+public class LoadsPageController extends BaseTablePageController<Load> {
     // Колони на таблицата
     @FXML
-    private TableColumn<StoreStock, Long> colStoreStockId;
+    private TableColumn<Load, Long> colLoadId;
 
     @FXML
-    private TableColumn<StoreStock, Product> colProductName;
+    private TableColumn<Load, Product> colProductName;
 
     @FXML
-    private TableColumn<StoreStock, String> colQuantity;
+    private TableColumn<Load, Long> colQuantity;
+
+    @FXML
+    private TableColumn<Load, LocalDateTime> colDateOfLoading;
 
     @Override
     protected void setColumnProperties() {
+        colDateOfLoading.setCellFactory(TextFieldTableCell.forTableColumn(new StringDateConverter()));
+
         // Попълване на данни за продукт
         colProductName.setCellFactory(col -> new ProductTableCell<>());
 
         // Задаване от къде в табличния клас четем данните
-        colStoreStockId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colLoadId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colDateOfLoading.setCellValueFactory(new PropertyValueFactory<>("dateOfLoading"));
     }
 }
