@@ -1,7 +1,5 @@
 package com.foodstore.controllers;
 
-// Контролер за страница Магазин - наличност на продукти
-
 import com.foodstore.models.Product;
 import com.foodstore.models.StoreStock;
 import com.foodstore.utils.ProductTableCell;

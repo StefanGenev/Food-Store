@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.foodstore.controllers.ProductController"
+            prefHeight="400.0" prefWidth="600.0">
+    <TableView fx:id="tableView" prefHeight="600.0" prefWidth="985.0" tableMenuButtonVisible="true">
+        <columns>
+            <TableColumn fx:id="colProductId" maxWidth="700.0" prefWidth="20.0" text="КОД"/>
+            <TableColumn fx:id="colProductName" maxWidth="4000.0" prefWidth="75.0" text="Продукт"/>
+            <TableColumn fx:id="colManufacturer" maxWidth="4000.0" prefWidth="75.0" text="Производител/Фирма"/>
+            <TableColumn fx:id="colUnit" maxWidth="4000.0" prefWidth="75.0" text="Мерна единица"/>
+            <TableColumn fx:id="colCategory" maxWidth="4000.0" prefWidth="75.0" text="Категория"/>
+            <TableColumn fx:id="colLoadPrice" maxWidth="4000.0" prefWidth="75.0" text="Цена на зареждане"/>
+            <TableColumn fx:id="colSellPrice" maxWidth="4000.0" prefWidth="75.0" text="Цена на продаване"/>
+        </columns>
+        <VBox.margin>
+            <Insets left="10.0" right="5.0"/>
+        </VBox.margin>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+        <contextMenu>
+            <ContextMenu>
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Delete"/>
+                </items>
+            </ContextMenu>
+        </contextMenu>
+    </TableView>
+</AnchorPane>

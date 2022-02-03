@@ -20,7 +20,8 @@ public class CategoryService implements BaseCRUDServiceInterface<Category> { // 
         this.productService = productService;
     }
 
-    public List<Category> getAllCategories() { // взима всички категории
+    @Override
+    public List<Category> findAllRecords() { // взима всички категории
         return this.categoryRepo.findAll();
     }
 
@@ -53,8 +54,4 @@ public class CategoryService implements BaseCRUDServiceInterface<Category> { // 
         }
     }
 
-    @Override
-    public List<Category> findAllRecords() {
-        return getAllCategories();
-    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ManufacturerService { // клас който обслужва бизнес логика за фирмите
+public class ManufacturerService implements BaseCRUDServiceInterface<Manufacturer> { // клас който обслужва бизнес логика за фирмите
 
     private final ManufacturerRepo manufacturerRepo;
     private final ProductService productService;
@@ -20,7 +20,8 @@ public class ManufacturerService { // клас който обслужва би�
         this.productService = productService;
     }
 
-    public List<Manufacturer> getAllManufacturers(){ // взима всички фирми от базата
+    @Override
+    public List<Manufacturer> findAllRecords() { // взима всички фирми
         return this.manufacturerRepo.findAll();
     }
 
@@ -52,5 +53,6 @@ public class ManufacturerService { // клас който обслужва би�
                     , manufacturer.getManufacturerName()));
         }
     }
+
 
 }

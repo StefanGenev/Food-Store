@@ -34,6 +34,12 @@
                     <Tab text="Зареждания">
                         <fx:include source="loadsPage.fxml"/>
                     </Tab>
+                    <Tab text="Категории">
+                        <fx:include source="categoriesPage.fxml" />
+                    </Tab>
+                    <Tab text="Продукти">
+                        <fx:include source="productsPage.fxml" />
+                    </Tab>
                 </TabPane>
             </HBox>
         </VBox>

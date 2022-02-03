@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductService { // клас който обслужва бизнес логика за продуктите
+public class ProductService implements BaseCRUDServiceInterface<Product> { // клас който обслужва бизнес логика за продуктите
 
     private final ProductRepo productRepo;
     private final LoadService loadService;
@@ -26,7 +26,8 @@ public class ProductService { // клас който обслужва бизне
         this.storeStockService = storeStockService;
     }
 
-    public List<Product> getAllProducts() { // взима всички продутки от базата
+    @Override
+    public List<Product> findAllRecords() { // взима всички продутки от базата
         return this.productRepo.findAll();
     }
 
@@ -79,5 +80,4 @@ public class ProductService { // клас който обслужва бизне
             this.productRepo.delete(product);
         }
     }
-
 }
