@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 // Контролер за страница със зареждания
 
 @Component
-public class LoadsPageController extends BaseTablePageController<Load> {
+public class LoadController extends BaseTablePageController<Load> {
     // Колони на таблицата
     @FXML
     private TableColumn<Load, Long> colLoadId;

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<AnchorPane xmlns="http://javafx.com/javafx"
+<StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.foodstore.controllers.CategoryController"
             prefHeight="400.0" prefWidth="600.0">
@@ -27,4 +27,4 @@
             </ContextMenu>
         </contextMenu>
     </TableView>
-</AnchorPane>
+</StackPane>

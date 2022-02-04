@@ -22,7 +22,7 @@ public class Manufacturer {
     @Column(nullable = false)
     private String manufacturerName; // Име на фирмата
 
-    Manufacturer(String manufacturerName){
+    public Manufacturer(String manufacturerName){
         this.manufacturerName = manufacturerName;
     }
 }

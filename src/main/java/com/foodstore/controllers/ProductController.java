@@ -1,26 +1,21 @@
 package com.foodstore.controllers;
 
-import com.foodstore.models.*;
-import com.foodstore.services.ProductService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.foodstore.models.Category;
+import com.foodstore.models.Manufacturer;
+import com.foodstore.models.Product;
+import com.foodstore.models.Unit;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Optional;
 
 // Контролер за страницата с категориите продукти
 
 @Component
-public class ProductController extends BaseTablePageController<Product> {
+public class ProductController extends ModifiableTablePageController<Product> {
     // Колони на таблицата
     @FXML
     private TableColumn<Product, Long> colProductId;
@@ -90,5 +85,10 @@ public class ProductController extends BaseTablePageController<Product> {
                 }
             }
         });
+    }
+
+    @Override
+    protected Optional<Product> showSelectedRecord(Optional<Product> record) {
+        return Optional.empty();
     }
 }

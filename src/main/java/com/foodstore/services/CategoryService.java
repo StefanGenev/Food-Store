@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService implements BaseCRUDServiceInterface<Category> { // клас който обслужва бизнес логика за категориите
+public class CategoryService implements ModifiableRegister<Category> { // клас който обслужва бизнес логика за категориите
 
     private final CategoryRepo categoryRepo;
     private final ProductService productService;
@@ -25,23 +25,25 @@ public class CategoryService implements BaseCRUDServiceInterface<Category> { // 
         return this.categoryRepo.findAll();
     }
 
+    @Override
+    public Category addRecord(Category record) {
+        return this.categoryRepo.saveAndFlush(record);
+    }
+
+    @Override
+    public Category updateRecord(Category record) {
+        if(this.categoryRepo.findById(record.getId()).isEmpty()) {
+            throw new NotFoundException(String.format("Не съществува такава категория id: %s."
+                    , record.getCategoryName()));
+        }
+        return this.categoryRepo.saveAndFlush(record);
+    }
+
     public Optional<Category> getCategoryById(long id) { // взима категория по id
         if(this.categoryRepo.findById(id).isEmpty()) {
             throw new NotFoundException(String.format("Не съществува такава категория id: %d.", id));
         }
         return this.categoryRepo.findById(id);
-    }
-
-    public Category updateCategoryById(Category category) { // редактира категория
-        if(this.categoryRepo.findById(category.getId()).isEmpty()) {
-            throw new NotFoundException(String.format("Не съществува такава категория id: %s."
-                    , category.getCategoryName()));
-        }
-        return this.categoryRepo.saveAndFlush(category);
-    }
-
-    public Category addCategory(Category category) { // добавя категория
-        return this.categoryRepo.saveAndFlush(category);
     }
 
     public void deleteCategory(Category category) { // изтрива категория ако няма продукти от дадената категория

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 // Контролер за страница с наличност на продукти
 
 @Component
-public class ProductAvailabilityPageController extends BaseTablePageController<StoreStock> {
+public class ProductAvailabilityController extends BaseTablePageController<StoreStock> {
     // Колони на таблицата
     @FXML
     private TableColumn<StoreStock, Long> colStoreStockId;

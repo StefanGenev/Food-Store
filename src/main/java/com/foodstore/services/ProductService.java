@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductService implements BaseCRUDServiceInterface<Product> { // клас който обслужва бизнес логика за продуктите
+public class ProductService implements ModifiableRegister<Product> { // клас който обслужва бизнес логика за продуктите
 
     private final ProductRepo productRepo;
     private final LoadService loadService;
@@ -31,6 +31,24 @@ public class ProductService implements BaseCRUDServiceInterface<Product> { // к
         return this.productRepo.findAll();
     }
 
+    @Override
+    public Product addRecord(Product record) {
+        if(this.storeStockService.findStoreStockByProduct(record).isEmpty()){
+            StoreStock storeStock = new StoreStock(record, 0d);
+            this.storeStockService.addRecord(storeStock);
+        }
+        return this.productRepo.saveAndFlush(record);
+    }
+
+    @Override
+    public Product updateRecord(Product record) {
+        if (this.productRepo.findById(record.getId()).isEmpty()) {
+            throw new NotFoundException(String.format("Не съществува такъв продукт: %s."
+                    , record.getProductName()));
+        }
+        return this.productRepo.saveAndFlush(record);
+    }
+
     public List<Product> getAllProductsByCategory(Category category) { // взима всички продукти по категория
         if (this.productRepo.findAllByCategory(category).isEmpty()) {
             throw new NotFoundException(String.format("Не съществуват такива продукти с категория: %s", category.getCategoryName()));
@@ -43,22 +61,6 @@ public class ProductService implements BaseCRUDServiceInterface<Product> { // к
             throw new NotFoundException(String.format("Не съществуват такива продукти с производител: %s", manufacturer.getManufacturerName()));
         }
         return this.productRepo.findAllByManufacturer(manufacturer);
-    }
-
-    public Product updateProduct(Product product) { // редактира продукт
-        if (this.productRepo.findById(product.getId()).isEmpty()) {
-            throw new NotFoundException(String.format("Не съществува такъв продукт: %s."
-                    , product.getProductName()));
-        }
-        return this.productRepo.saveAndFlush(product);
-    }
-
-    public Product addProduct(Product product) { // добавя продукт в базата
-        if(this.storeStockService.findStoreStockByProduct(product).isEmpty()){
-            StoreStock storeStock = new StoreStock(product, 0d);
-            this.storeStockService.addStoreStock(storeStock);
-        }
-        return this.productRepo.saveAndFlush(product);
     }
 
     public void deleteProduct(Product product) { // изтрива продукт

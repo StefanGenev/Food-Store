@@ -13,7 +13,7 @@ import java.util.Optional;
 // Клас за бизнес логика на магазин
 
 @Service
-public class StoreStockService implements BaseCRUDServiceInterface<StoreStock> {
+public class StoreStockService implements ReadableRegister<StoreStock> {
     public static final String CASH_PARAMETER_NAME = "CASH";
 
     private final StoreStockRepository storeStockRepository; // Магазин - стоки
@@ -24,16 +24,17 @@ public class StoreStockService implements BaseCRUDServiceInterface<StoreStock> {
         this.storeDataRepository = storeDataRepository;
     }
 
-    public StoreStock addStoreStock(StoreStock storeStock){
-        return storeStockRepository.saveAndFlush(storeStock);
+    @Override
+    public List<StoreStock> findAllRecords() {
+        return storeStockRepository.findAll();
+    }
+
+    public StoreStock addRecord(StoreStock record) {
+        return storeStockRepository.saveAndFlush(record);
     }
 
     public Optional<StoreStock> findStoreStockByProduct(Product product){
         return this.storeStockRepository.findStoreStockByProduct(product);
-    }
-
-    public List<StoreStock> findAllStoreStocks(){
-        return storeStockRepository.findAll();
     }
 
     public StoreStock updateStoreStock(StoreStock storeStock){
@@ -43,11 +44,6 @@ public class StoreStockService implements BaseCRUDServiceInterface<StoreStock> {
     public StoreStock findLoadById(Long id){
         return storeStockRepository.findStoreStockById(id)
                 .orElseThrow(() -> new NotFoundException("Не е намерена стока с идентификатор: " + id));
-    }
-
-    @Transactional
-    public void deleteLoad(Long id){
-        this.storeStockRepository.deleteStoreStockById(id);
     }
 
     public boolean updateCashRegister( Sale sale ){
@@ -78,10 +74,5 @@ public class StoreStockService implements BaseCRUDServiceInterface<StoreStock> {
         this.storeDataRepository.saveAndFlush(storeData.get());
 
         return true;
-    }
-
-    @Override
-    public List<StoreStock> findAllRecords() {
-        return findAllStoreStocks();
     }
 }

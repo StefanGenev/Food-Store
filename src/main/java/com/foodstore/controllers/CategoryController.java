@@ -1,29 +1,17 @@
 package com.foodstore.controllers;
 
 import com.foodstore.models.Category;
-import com.foodstore.models.Load;
-import com.foodstore.services.CategoryService;
-import com.foodstore.utils.ProductTableCell;
-import com.foodstore.utils.StringDateConverter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Optional;
 
 // Контролер за страницата с категориите продукти
 
 @Component
-public class CategoryController extends BaseTablePageController<Category> {
+public class CategoryController extends ModifiableTablePageController<Category> {
     // Колони на таблицата
     @FXML
     private TableColumn<Category, Long> colCategoryId;
@@ -36,5 +24,10 @@ public class CategoryController extends BaseTablePageController<Category> {
         // Link-ваме колонките
         colCategoryId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCategoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
+    }
+
+    @Override
+    protected Optional<Category> showSelectedRecord(Optional<Category> record) {
+        return Optional.empty();
     }
 }

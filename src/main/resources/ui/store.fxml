@@ -40,6 +40,9 @@
                     <Tab text="Продукти">
                         <fx:include source="productsPage.fxml" />
                     </Tab>
+                    <Tab text="Производители">
+                        <fx:include source="manufacturersPage.fxml" />
+                    </Tab>
                 </TabPane>
             </HBox>
         </VBox>
