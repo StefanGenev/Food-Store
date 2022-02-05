@@ -35,7 +35,7 @@ public class ProductService implements ModifiableRegister<Product> { // клас
     public Product addRecord(Product record) {
         if(this.storeStockService.findStoreStockByProduct(record).isEmpty()){
             StoreStock storeStock = new StoreStock(record, 0d);
-            this.storeStockService.addRecord(storeStock);
+            this.storeStockService.addStoreStock(storeStock);
         }
         return this.productRepo.saveAndFlush(record);
     }

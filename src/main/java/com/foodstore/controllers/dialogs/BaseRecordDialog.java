@@ -18,8 +18,6 @@ import java.util.Optional;
 
 public abstract class BaseRecordDialog<T> extends Dialog<T> {
 
-    private final String DIALOG_NAME = "Производител";
-
     @FXML
     private ButtonType saveButtonType;
 
@@ -37,7 +35,7 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
     protected void initialize(Window owner) throws IOException {
         // Зареждане на fxml и контролер на ресурса
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/ui/manufacturerDialog.fxml"));
+        loader.setLocation(getClass().getResource(this.getResourceAddress()));
         loader.setController(this);
 
         DialogPane dialogPane = loader.load();
@@ -47,7 +45,7 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         initOwner(owner);
         initModality(Modality.APPLICATION_MODAL);
         setResizable(true);
-        setTitle(DIALOG_NAME);
+        setTitle(this.getDialogTitle());
 
         // Действия при запис или отказ
         setResultConverter(buttonType -> {
@@ -66,6 +64,14 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
     }
 
     protected void setDialogData(Optional<T> record) {
+    }
+
+    public String getDialogTitle() { // всеки наследник на базовия диалог трябва да пренапише този метод
+        return "";                   // името на диалога
+    }
+
+    public String getResourceAddress(){ // всеки наследник на базовия диалог трябва да пренапише този метод
+        return "";                      // път към .fxml файлът, който отговаря на диалога
     }
 
     protected T getDialogData() {

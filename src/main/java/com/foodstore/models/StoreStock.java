@@ -21,7 +21,7 @@ public class StoreStock extends Stock{
     private Product product; // Продукт
 
     @Column(nullable = false)
-    private LocalDateTime dateTime; // Количество на продукта към дата
+    private LocalDateTime availabilityDate; // Количество на продукта към дата
 
     public StoreStock(Product product, Double quantity){
         this.setProduct(product);

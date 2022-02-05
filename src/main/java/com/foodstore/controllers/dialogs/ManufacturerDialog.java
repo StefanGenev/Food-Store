@@ -41,4 +41,14 @@ public class ManufacturerDialog extends BaseRecordDialog<Manufacturer> {
 
         return this.manufacturer;
     }
+
+    @Override
+    public String getDialogTitle() {
+        return "Фирма/Производител";
+    }
+
+    @Override
+    public String getResourceAddress(){
+        return "/ui/manufacturerDialog.fxml";
+    }
 }

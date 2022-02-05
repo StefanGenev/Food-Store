@@ -11,9 +11,11 @@
            prefHeight="400.0" prefWidth="600.0">
     <TableView fx:id="tableView" prefHeight="600.0" prefWidth="985.0" tableMenuButtonVisible="true">
         <columns>
-            <TableColumn fx:id="colStoreStockId" maxWidth="700.0" prefWidth="20.0" text="ID"/>
-            <TableColumn fx:id="colProductName" maxWidth="4000.0" prefWidth="75.0" text="Product"/>
-            <TableColumn fx:id="colQuantity" maxWidth="4000.0" prefWidth="75.0" text="Quantity"/>
+            <TableColumn fx:id="colStoreStockId" maxWidth="700.0" prefWidth="20.0" text="КОД"/>
+            <TableColumn fx:id="colProductName" maxWidth="4000.0" prefWidth="75.0" text="Продукт"/>
+            <TableColumn fx:id="colQuantity" maxWidth="4000.0" prefWidth="75.0" text="Количество"/>
+            <TableColumn fx:id="colCategory" maxWidth="4000.0" prefWidth="75.0" text="Категория"/>
+            <TableColumn fx:id="colAvailabilityDate" maxWidth="4000.0" prefWidth="75.0" text="Дата на наличност"/>
         </columns>
         <VBox.margin>
             <Insets left="10.0" right="5.0"/>

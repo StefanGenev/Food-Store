@@ -1,9 +1,12 @@
 package com.foodstore.controllers;
 
+import com.foodstore.controllers.dialogs.CategoryDialog;
 import com.foodstore.models.Category;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -28,6 +31,9 @@ public class CategoryController extends ModifiableTablePageController<Category> 
 
     @Override
     protected Optional<Category> showSelectedRecord(Optional<Category> record) {
-        return Optional.empty();
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        CategoryDialog dialog = new CategoryDialog(owner, record);
+
+        return dialog.showAndWait();
     }
 }

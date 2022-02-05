@@ -24,17 +24,16 @@ public class StoreStockService implements ReadableRegister<StoreStock> {
         this.storeDataRepository = storeDataRepository;
     }
 
-    @Override
-    public List<StoreStock> findAllRecords() {
-        return storeStockRepository.findAll();
-    }
-
-    public StoreStock addRecord(StoreStock record) {
-        return storeStockRepository.saveAndFlush(record);
+    public StoreStock addStoreStock(StoreStock storeStock){
+        return storeStockRepository.saveAndFlush(storeStock);
     }
 
     public Optional<StoreStock> findStoreStockByProduct(Product product){
         return this.storeStockRepository.findStoreStockByProduct(product);
+    }
+
+    public List<StoreStock> findAllStoreStocks(){
+        return storeStockRepository.findAll();
     }
 
     public StoreStock updateStoreStock(StoreStock storeStock){
@@ -44,6 +43,11 @@ public class StoreStockService implements ReadableRegister<StoreStock> {
     public StoreStock findLoadById(Long id){
         return storeStockRepository.findStoreStockById(id)
                 .orElseThrow(() -> new NotFoundException("Не е намерена стока с идентификатор: " + id));
+    }
+
+    @Transactional
+    public void deleteLoad(Long id){
+        this.storeStockRepository.deleteStoreStockById(id);
     }
 
     public boolean updateCashRegister( Sale sale ){
@@ -74,5 +78,10 @@ public class StoreStockService implements ReadableRegister<StoreStock> {
         this.storeDataRepository.saveAndFlush(storeData.get());
 
         return true;
+    }
+
+    @Override
+    public List<StoreStock> findAllRecords() {
+        return findAllStoreStocks();
     }
 }

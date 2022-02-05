@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane prefHeight="100.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <content>
+        <GridPane hgap="5" vgap="5">
+
+            <Label prefHeight="17.0" prefWidth="164.0" text="Име на категория:" GridPane.columnIndex="0"
+                   GridPane.rowIndex="2"/>
+            <TextField fx:id="categoryTextField" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1"
+                       GridPane.fillWidth="false" GridPane.rowIndex="2"/>
+
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+        </GridPane>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:id="addCategory" buttonData="OK_DONE" text="Запис"/>
+        <ButtonType buttonData="CANCEL_CLOSE" text="Затвори"/>
+    </buttonTypes>
+
+</DialogPane>
