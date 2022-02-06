@@ -30,4 +30,9 @@ public class ManufacturerController extends ModifiableTablePageController<Manufa
 
         return dialog.showAndWait();
     }
+
+    @Override
+    protected String getDeleteAlertMessage(Manufacturer record) {
+        return "Сигурни ли сте че искате да изтриете производител " + record.getManufacturerName() + "?";
+    }
 }

@@ -19,9 +19,6 @@ public class SalesPageController extends BaseTablePageController<Sale> {
 
     // Колони на таблицата
     @FXML
-    private TableColumn<Sale, Long> colSaleId;
-
-    @FXML
     private TableColumn<Sale, Product> colProductName;
 
     @FXML
@@ -39,7 +36,6 @@ public class SalesPageController extends BaseTablePageController<Sale> {
         colProductName.setCellFactory(col -> new ProductTableCell<>());
 
         // Задаване от къде в табличния клас четем данните
-        colSaleId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDateOfSale.setCellValueFactory(new PropertyValueFactory<>("dateOfSale"));

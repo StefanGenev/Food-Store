@@ -1,13 +1,21 @@
 package com.foodstore.controllers;
 
+import com.foodstore.controllers.dialogs.ProductDialog;
 import com.foodstore.models.Category;
 import com.foodstore.models.Manufacturer;
 import com.foodstore.models.Product;
 import com.foodstore.models.Unit;
+import com.foodstore.services.CategoryService;
+import com.foodstore.services.ManufacturerService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -17,9 +25,6 @@ import java.util.Optional;
 @Component
 public class ProductController extends ModifiableTablePageController<Product> {
     // Колони на таблицата
-    @FXML
-    private TableColumn<Product, Long> colProductId;
-
     @FXML
     private TableColumn<Product, String> colProductName;
 
@@ -38,10 +43,15 @@ public class ProductController extends ModifiableTablePageController<Product> {
     @FXML
     private TableColumn<Product, Double> colSellPrice;
 
+    @Autowired
+    private ManufacturerService manufacturerService;
+
+    @Autowired
+    private CategoryService categoryService;
+
     @Override
     protected void setColumnProperties() {
         // Link-ване на колонките
-        colProductId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("productName"));
         colManufacturer.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
@@ -89,6 +99,17 @@ public class ProductController extends ModifiableTablePageController<Product> {
 
     @Override
     protected Optional<Product> showSelectedRecord(Optional<Product> record) {
-        return Optional.empty();
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+
+        ObservableList<Manufacturer> manufacturersList = FXCollections.observableArrayList();
+        manufacturersList.addAll(manufacturerService.findAllRecords());
+
+        ObservableList<Category> categoriesList = FXCollections.observableArrayList();
+        categoriesList.addAll(categoryService.findAllRecords());
+
+        ProductDialog dialog = new ProductDialog(owner, record);
+        dialog.setManufacturers(manufacturersList);
+        dialog.setCategories(categoriesList);
+        return dialog.showAndWait();
     }
 }

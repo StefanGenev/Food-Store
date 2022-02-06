@@ -4,10 +4,12 @@ import com.foodstore.exceptions.InvalidDeleteException;
 import com.foodstore.exceptions.NotFoundException;
 import com.foodstore.models.Category;
 import com.foodstore.repositories.CategoryRepo;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class CategoryService implements ModifiableRegister<Category> { // клас който обслужва бизнес логика за категориите
@@ -39,21 +41,22 @@ public class CategoryService implements ModifiableRegister<Category> { // кла
         return this.categoryRepo.saveAndFlush(record);
     }
 
+    @Override
+    public void deleteRecord(Category record) {
+        if (this.productService.getAllProductsByCategory(record).isEmpty()) {
+            this.categoryRepo.delete(record);
+        } else {
+            throw new InvalidDeleteException(String.format(
+                    "Категория: %s не може да бъде изтрита. Съществуват продукти от дадената категория."
+                    , record.getCategoryName()));
+        }
+    }
+
     public Optional<Category> getCategoryById(long id) { // взима категория по id
         if(this.categoryRepo.findById(id).isEmpty()) {
             throw new NotFoundException(String.format("Не съществува такава категория id: %d.", id));
         }
         return this.categoryRepo.findById(id);
-    }
-
-    public void deleteCategory(Category category) { // изтрива категория ако няма продукти от дадената категория
-        if (this.productService.getAllProductsByCategory(category).isEmpty()) {
-            this.categoryRepo.delete(category);
-        } else {
-            throw new InvalidDeleteException(String.format(
-                    "Категория: %s не може да бъде изтрита. Съществуват продукти от дадената категория."
-                    , category.getCategoryName()));
-        }
     }
 
 }

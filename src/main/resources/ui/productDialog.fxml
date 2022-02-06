@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane prefHeight="100.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1">
+
+    <content>
+        <GridPane hgap="5" vgap="5">
+
+            <Label text="Име на продукт:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="productNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Продукт"/>
+
+            <Label text="Производител:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <ComboBox fx:id="manufacturerComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Избери производител">
+            </ComboBox>
+
+            <Label text="Мерна единица:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="unitComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="Избери мерна единица">
+            </ComboBox>
+
+            <Label text="Категория:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <ComboBox fx:id="categoryComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Избери категория">
+            </ComboBox>
+
+            <Label text="Цена за зареждане:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField fx:id="loadPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+            <Label text="Цена за продажба:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField fx:id="sellPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+        </GridPane>
+    </content>
+
+    <buttonTypes>
+        <ButtonType buttonData="OK_DONE" text="Запис"/>
+        <ButtonType buttonData="CANCEL_CLOSE" text="Затвори"/>
+    </buttonTypes>
+
+</DialogPane>

@@ -15,9 +15,6 @@ import org.springframework.stereotype.Component;
 public class ProductAvailabilityController extends BaseTablePageController<StoreStock> {
     // Колони на таблицата
     @FXML
-    private TableColumn<StoreStock, Long> colStoreStockId;
-
-    @FXML
     private TableColumn<StoreStock, Product> colProductName;
 
     @FXML
@@ -47,7 +44,6 @@ public class ProductAvailabilityController extends BaseTablePageController<Store
         });
 
         // Задаване от къде в табличния клас четем данните
-        colStoreStockId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));

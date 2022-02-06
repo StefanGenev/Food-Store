@@ -27,12 +27,18 @@ public abstract class BaseTablePageController<T> implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Инициализация на контекстното меню
+
+        // Инициализация на контекстно меню на таблицата
+        ContextMenu menu = new ContextMenu();
+        initializeTableContextMenu(menu);
+        tableView.setContextMenu(menu);
+
+        // Инициализация на контекстно меню на ред
         tableView.setRowFactory(tableView -> {
             final TableRow<T> row = new TableRow<>();
             final ContextMenu contextMenu = new ContextMenu();
 
-            initializeContextMenu(contextMenu, row);
+            initializeRowContextMenu(contextMenu, row);
 
             row.contextMenuProperty().bind(
                     Bindings.when(row.emptyProperty())
@@ -53,6 +59,16 @@ public abstract class BaseTablePageController<T> implements Initializable {
         reloadTable();
     }
 
+    protected void initializeTableContextMenu(ContextMenu menu) {
+        // Инициализация на контекстно меню на таблицата
+        final MenuItem refreshMenuItem = new MenuItem("Презареждане");
+
+        // Действия при избор на менюто
+        refreshMenuItem.setOnAction(event -> reloadTable());
+
+        menu.getItems().add(refreshMenuItem);
+    }
+
     protected abstract void setColumnProperties();
 
     protected void loadRecordsFromDB() {
@@ -69,7 +85,7 @@ public abstract class BaseTablePageController<T> implements Initializable {
         fillTableView();
     }
 
-    protected void initializeContextMenu(ContextMenu contextMenu, TableRow<T> selectedRow) {
+    protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<T> selectedRow) {
         // Дефинираме опциите в контекстното меню
         final MenuItem refreshMenuItem = new MenuItem("Презареждане");
 

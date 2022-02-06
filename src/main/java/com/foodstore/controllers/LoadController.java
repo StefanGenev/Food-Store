@@ -17,8 +17,6 @@ import java.time.LocalDateTime;
 @Component
 public class LoadController extends BaseTablePageController<Load> {
     // Колони на таблицата
-    @FXML
-    private TableColumn<Load, Long> colLoadId;
 
     @FXML
     private TableColumn<Load, Product> colProductName;
@@ -37,7 +35,6 @@ public class LoadController extends BaseTablePageController<Load> {
         colProductName.setCellFactory(col -> new ProductTableCell<>());
 
         // Задаване от къде в табличния клас четем данните
-        colLoadId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDateOfLoading.setCellValueFactory(new PropertyValueFactory<>("dateOfLoading"));

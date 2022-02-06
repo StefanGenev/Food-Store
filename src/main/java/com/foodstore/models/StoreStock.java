@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "store_stocks")
 public class StoreStock extends Stock{
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="product_id", nullable=false)
     private Product product; // Продукт
 

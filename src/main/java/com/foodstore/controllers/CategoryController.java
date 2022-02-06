@@ -17,15 +17,11 @@ import java.util.Optional;
 public class CategoryController extends ModifiableTablePageController<Category> {
     // Колони на таблицата
     @FXML
-    private TableColumn<Category, Long> colCategoryId;
-
-    @FXML
     private TableColumn<Category, String> colCategoryName;
 
     @Override
     protected void setColumnProperties() {
         // Link-ваме колонките
-        colCategoryId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCategoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
     }
 

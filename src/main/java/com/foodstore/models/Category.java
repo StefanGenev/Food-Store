@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
-public class Category { // Категория за продукти
+public class Category extends NameableEntity { // Категория за продукти
 
 
     @Id
@@ -27,4 +27,8 @@ public class Category { // Категория за продукти
         this.categoryName = categoryName;
     }
 
+    @Override
+    public String getName() {
+        return getCategoryName();
+    }
 }

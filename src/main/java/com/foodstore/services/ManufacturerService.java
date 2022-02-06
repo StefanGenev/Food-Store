@@ -39,22 +39,22 @@ public class ManufacturerService implements ModifiableRegister<Manufacturer> { /
         return this.manufacturerRepo.saveAndFlush(record);
     }
 
+    @Override
+    public void deleteRecord(Manufacturer record) {
+        if (this.productService.getAllProductsByManufacturer(record).isEmpty()) {
+            this.manufacturerRepo.delete(record);
+        } else {
+            throw new InvalidDeleteException(String.format(
+                    "Производител: %s не може да бъде изтрит. Фирмата има съществуващи продукти в базата."
+                    , record.getManufacturerName()));
+        }
+    }
+
     public Optional<Manufacturer> getManufacturerById(long id){ // взима фирма/производител по id
         if(this.manufacturerRepo.findById(id).isEmpty()) {
             throw new NotFoundException(String.format("Не съществува такава фирма/производител id: %d.", id));
         }
         return this.manufacturerRepo.findById(id);
     }
-
-    public void deleteCategory(Manufacturer manufacturer) { // изтрива фирма/производител ако нямат продукти
-        if (this.productService.getAllProductsByManufacturer(manufacturer).isEmpty()) {
-            this.manufacturerRepo.delete(manufacturer);
-        } else {
-            throw new InvalidDeleteException(String.format(
-                    "Производител: %s не може да бъде изтрит. Фирмата има съществуващи продукти в базата."
-                    , manufacturer.getManufacturerName()));
-        }
-    }
-
 
 }

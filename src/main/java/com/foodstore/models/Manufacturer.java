@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "manufacturers")
-public class Manufacturer {
+public class Manufacturer extends NameableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -24,5 +24,10 @@ public class Manufacturer {
 
     public Manufacturer(String manufacturerName){
         this.manufacturerName = manufacturerName;
+    }
+
+    @Override
+    public String getName() {
+        return getManufacturerName();
     }
 }

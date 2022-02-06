@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "products")
-public class Product { // Продукт в магазина
+public class Product extends NameableEntity { // Продукт в магазина
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +20,14 @@ public class Product { // Продукт в магазина
 
     private String productName; // Име на продукта
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="manufacturer_id", nullable=false)
     private Manufacturer manufacturer; // Фирма - производител на продукта
 
     @Enumerated(EnumType.STRING)
     private Unit unit; // Мерна единица (кг., литър, ...)
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="category_id", nullable=false)
     private Category category; // Категория на продукта
 
@@ -46,4 +46,8 @@ public class Product { // Продукт в магазина
         this.sellPrice = sellPrice;
     }
 
+    @Override
+    public String getName() {
+        return getProductName();
+    }
 }

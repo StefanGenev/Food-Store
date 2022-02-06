@@ -4,4 +4,5 @@ package com.foodstore.services;
 public interface ModifiableRegister<T> extends ReadableRegister<T> {
     T addRecord(T record); // Добавяне на запис
     T updateRecord(T record); // Редакция на запис
+    void deleteRecord(T record); // Изтриване на запис
 }

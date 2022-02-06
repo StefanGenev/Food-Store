@@ -24,11 +24,15 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
     public BaseRecordDialog(Window owner, Optional<T> record) {
         try {
             initialize(owner);
+            loadData();
             setDialogData(record);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected void loadData() {
     }
 
     @FXML
@@ -47,6 +51,9 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         setResizable(true);
         setTitle(this.getDialogTitle());
 
+        // Допълнителни настройки от наследниците
+        additionalDialogInitialization();
+
         // Действия при запис или отказ
         setResultConverter(buttonType -> {
             // Ако изберем отказ не правим нищо
@@ -55,9 +62,6 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
 
             return getDialogData();
         });
-
-        // Допълнителни настройки от наследниците
-        additionalDialogInitialization();
     }
 
     protected void additionalDialogInitialization() {
@@ -70,9 +74,8 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         return "";                   // името на диалога
     }
 
-    public String getResourceAddress(){ // всеки наследник на базовия диалог трябва да пренапише този метод
-        return "";                      // път към .fxml файлът, който отговаря на диалога
-    }
+    protected abstract String getResourceAddress(); // всеки наследник на базовия диалог трябва да пренапише този метод
+                                                    // път към .fxml файлът, който отговаря на диалога
 
     protected T getDialogData() {
         return null;

@@ -5,7 +5,6 @@ import com.foodstore.exceptions.NotFoundException;
 import com.foodstore.models.Category;
 import com.foodstore.models.Manufacturer;
 import com.foodstore.models.Product;
-import com.foodstore.models.StoreStock;
 import com.foodstore.repositories.ProductRepo;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,11 @@ public class ProductService implements ModifiableRegister<Product> { // клас
 
     @Override
     public Product addRecord(Product record) {
-        if(this.storeStockService.findStoreStockByProduct(record).isEmpty()){
-            StoreStock storeStock = new StoreStock(record, 0d);
-            this.storeStockService.addStoreStock(storeStock);
-        }
+        //TODO Add check for existing by NAME
+//        if(this.storeStockService.findStoreStockByProduct(record).isEmpty()){
+//            StoreStock storeStock = new StoreStock(record, 0d);
+//            this.storeStockService.addStoreStock(storeStock);
+//        }
         return this.productRepo.saveAndFlush(record);
     }
 
@@ -49,6 +49,26 @@ public class ProductService implements ModifiableRegister<Product> { // клас
         return this.productRepo.saveAndFlush(record);
     }
 
+    @Override
+    public void deleteRecord(Product record) {
+        String errorMessage = "";
+
+        if (!this.loadService.findLoadByProduct(record).isEmpty())
+            errorMessage += String.format("Продуктът бива зареждан в магазина: %s.\n", record.getProductName());
+
+        if (!this.saleService.findSaleByProduct(record).isEmpty())
+            errorMessage += String.format("Има продажби на този продукт: %s.\n", record.getProductName());
+
+        if (this.storeStockService.findStoreStockByProduct(record).isPresent())
+            errorMessage += String.format("Има набор продукти от този тип в магазина: %s.\n", record.getProductName());
+
+        if (errorMessage.length() != 0) {
+            throw new InvalidDeleteException(errorMessage);
+        } else {
+            this.productRepo.delete(record);
+        }
+    }
+
     public List<Product> getAllProductsByCategory(Category category) { // взима всички продукти по категория
         if (this.productRepo.findAllByCategory(category).isEmpty()) {
             throw new NotFoundException(String.format("Не съществуват такива продукти с категория: %s", category.getCategoryName()));
@@ -57,29 +77,6 @@ public class ProductService implements ModifiableRegister<Product> { // клас
     }
 
     public List<Product> getAllProductsByManufacturer(Manufacturer manufacturer) { // взима всички продукти по производител
-        if (this.productRepo.findAllByManufacturer(manufacturer).isEmpty()) {
-            throw new NotFoundException(String.format("Не съществуват такива продукти с производител: %s", manufacturer.getManufacturerName()));
-        }
         return this.productRepo.findAllByManufacturer(manufacturer);
-    }
-
-    public void deleteProduct(Product product) { // изтрива продукт
-        String errorMessage = "";
-
-        if (!this.loadService.findLoadByProduct(product).isEmpty()) {
-            errorMessage += String.format("Продуктът бива зареждан в магазина: %s.\n", product.getProductName());
-        }
-        if (!this.saleService.findSaleByProduct(product).isEmpty()) {
-            errorMessage += String.format("Има продажби на този продукт: %s.\n", product.getProductName());
-        }
-        if (this.storeStockService.findStoreStockByProduct(product).isPresent()) {
-            errorMessage += String.format("Има набор продукти от този тип в магазина: %s.\n", product.getProductName());
-        }
-
-        if (errorMessage.length() != 0) {
-            throw new InvalidDeleteException(errorMessage);
-        } else {
-            this.productRepo.delete(product);
-        }
     }
 }
