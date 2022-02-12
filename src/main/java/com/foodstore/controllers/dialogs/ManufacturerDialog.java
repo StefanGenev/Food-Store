@@ -3,6 +3,7 @@ package com.foodstore.controllers.dialogs;
 import com.foodstore.models.Manufacturer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
@@ -11,6 +12,11 @@ import java.util.Optional;
 // Диалог за данни на производител
 
 public class ManufacturerDialog extends BaseRecordDialog<Manufacturer> {
+
+    private final String RESOURCE_ADDRESS = "/ui/manufacturerDialog.fxml";
+    private final String DIALOG_TITLE = "Фирма/Производител";
+
+    private final int MANUFACTURER_MINIMUM_SYMBOLS = 3;
 
     // Полета на диалог
     @FXML
@@ -29,9 +35,15 @@ public class ManufacturerDialog extends BaseRecordDialog<Manufacturer> {
     }
 
     @Override
+    protected void validateDialog(Button okButton) {
+        manufacturerTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            okButton.setDisable(newValue == null || newValue.trim().length() < MANUFACTURER_MINIMUM_SYMBOLS);
+        });
+    }
+
+    @Override
     protected void setDialogData(Optional<Manufacturer> record){
         manufacturer = record.orElseGet(Manufacturer::new);
-
         manufacturerTextField.setText(manufacturer.getManufacturerName());
     }
 
@@ -44,11 +56,11 @@ public class ManufacturerDialog extends BaseRecordDialog<Manufacturer> {
 
     @Override
     public String getDialogTitle() {
-        return "Фирма/Производител";
+        return DIALOG_TITLE;
     }
 
     @Override
     public String getResourceAddress(){
-        return "/ui/manufacturerDialog.fxml";
+        return RESOURCE_ADDRESS;
     }
 }

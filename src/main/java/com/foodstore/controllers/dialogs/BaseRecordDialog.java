@@ -3,10 +3,7 @@ package com.foodstore.controllers.dialogs;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Window;
 
@@ -19,7 +16,7 @@ import java.util.Optional;
 public abstract class BaseRecordDialog<T> extends Dialog<T> {
 
     @FXML
-    private ButtonType saveButtonType;
+    protected ButtonType okayButtonType;
 
     public BaseRecordDialog(Window owner, Optional<T> record) {
         try {
@@ -45,6 +42,12 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         DialogPane dialogPane = loader.load();
         setDialogPane(dialogPane);
 
+        // Валидация на диалог
+        final Button okButton = (Button) getDialogPane().lookupButton(okayButtonType);
+        okButton.setDisable(true);
+
+        validateDialog(okButton);
+
         // Инизиализация на притежател, заглавие и модалност на диалога
         initOwner(owner);
         initModality(Modality.APPLICATION_MODAL);
@@ -64,6 +67,10 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         });
     }
 
+    protected void validateDialog(Button okButton) {
+        okButton.setDisable(false);
+    }
+
     protected void additionalDialogInitialization() {
     }
 
@@ -75,7 +82,7 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
     }
 
     protected abstract String getResourceAddress(); // всеки наследник на базовия диалог трябва да пренапише този метод
-                                                    // път към .fxml файлът, който отговаря на диалога
+    // път към .fxml файлът, който отговаря на диалога
 
     protected T getDialogData() {
         return null;

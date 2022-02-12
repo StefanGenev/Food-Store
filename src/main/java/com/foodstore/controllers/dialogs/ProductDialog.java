@@ -6,17 +6,22 @@ import com.foodstore.models.Product;
 import com.foodstore.models.Unit;
 import com.foodstore.utils.EntityStringConverter;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 // Диалог за продукти
 
 public class ProductDialog extends BaseRecordDialog<Product> {
+    private final String RESOURCE_ADDRESS = "/ui/productDialog.fxml";
+    private final String DIALOG_TITLE = "Продукти";
 
     // Полета на диалог
 
@@ -52,13 +57,32 @@ public class ProductDialog extends BaseRecordDialog<Product> {
     }
 
     @Override
+    public String getDialogTitle() {
+        return DIALOG_TITLE;
+    }
+
+    @Override
     protected String getResourceAddress() {
-        return "/ui/productDialog.fxml";
+        return RESOURCE_ADDRESS;
     }
 
     @Override
     protected void loadData() {
         unitComboBox.getItems().setAll(Unit.values());
+    }
+
+    @Override
+    protected void validateDialog(Button okButton) {
+        okButton.disableProperty()
+                .bind(Bindings.createBooleanBinding(
+                        this::checkForInvalidFields,
+                        productNameTextField.textProperty(),
+                        manufacturerComboBox.valueProperty(),
+                        unitComboBox.valueProperty(),
+                        categoryComboBox.valueProperty(),
+                        loadPriceTextField.textProperty(),
+                        sellPriceTextField.textProperty()
+                ));
     }
 
     @Override
@@ -77,8 +101,12 @@ public class ProductDialog extends BaseRecordDialog<Product> {
         manufacturerComboBox.setValue(product.getManufacturer());
         unitComboBox.setValue(product.getUnit());
         categoryComboBox.setValue(product.getCategory());
-        loadPriceTextField.setText(Double.toString(product.getLoadPrice()));
-        sellPriceTextField.setText(Double.toString(product.getSellPrice()));
+
+        if (product.getLoadPrice() > 0)
+            loadPriceTextField.setText(Double.toString(product.getLoadPrice()));
+
+        if (product.getSellPrice() > 0)
+            sellPriceTextField.setText(Double.toString(product.getSellPrice()));
     }
 
     @Override
@@ -103,5 +131,29 @@ public class ProductDialog extends BaseRecordDialog<Product> {
         this.categoriesList = categoriesList;
         categoryComboBox.setItems(categoriesList);
         categoryComboBox.setValue(product.getCategory());
+    }
+
+    private boolean checkForInvalidFields() {
+        AtomicBoolean fieldsAreInvalid = new AtomicBoolean(false);
+
+        if (productNameTextField.getText() == null || productNameTextField.getText().trim().isEmpty())
+            fieldsAreInvalid.set(true);
+
+        if (manufacturerComboBox.getValue() == null)
+            fieldsAreInvalid.set(true);
+
+        if (unitComboBox.getValue() == null)
+            fieldsAreInvalid.set(true);
+
+        if (categoryComboBox.getValue() == null)
+            fieldsAreInvalid.set(true);
+
+        if (loadPriceTextField.getText() == null || loadPriceTextField.getText().trim().isEmpty() || Double.parseDouble(loadPriceTextField.getText().trim()) <= 0.0)
+            fieldsAreInvalid.set(true);
+
+        if (sellPriceTextField.getText() == null || sellPriceTextField.getText().trim().isEmpty() || Double.parseDouble(sellPriceTextField.getText().trim()) <= 0.0)
+            fieldsAreInvalid.set(true);
+
+        return fieldsAreInvalid.get();
     }
 }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 // Контролер за страница Продажби
 
 @Component
-public class SalesPageController extends BaseTablePageController<Sale> {
+public class SaleController extends BaseTablePageController<Sale> {
 
     // Колони на таблицата
     @FXML

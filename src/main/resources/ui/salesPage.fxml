@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.foodstore.controllers.SalesPageController"
+           fx:controller="com.foodstore.controllers.SaleController"
            prefHeight="400.0" prefWidth="600.0">
     <TableView fx:id="tableView" prefHeight="600.0" prefWidth="985.0" tableMenuButtonVisible="true">
         <columns>

@@ -26,7 +26,7 @@
     </content>
 
     <buttonTypes>
-        <ButtonType fx:id="addCategory" buttonData="OK_DONE" text="Запис"/>
+        <ButtonType fx:id="okayButtonType" buttonData="OK_DONE" text="Запис"/>
         <ButtonType buttonData="CANCEL_CLOSE" text="Затвори"/>
     </buttonTypes>
 

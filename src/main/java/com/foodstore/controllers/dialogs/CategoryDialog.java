@@ -3,6 +3,7 @@ package com.foodstore.controllers.dialogs;
 import com.foodstore.models.Category;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
@@ -11,6 +12,9 @@ import java.util.Optional;
 // Диалог за данни на категория
 
 public class CategoryDialog extends BaseRecordDialog<Category> {
+    private final String RESOURCE_ADDRESS = "/ui/categoryDialog.fxml";
+    private final String DIALOG_TITLE = "Категория";
+    private final int CATEGORY_MINIMUM_SYMBOLS = 3;
 
     // Полета на диалог
     @FXML
@@ -29,6 +33,13 @@ public class CategoryDialog extends BaseRecordDialog<Category> {
     }
 
     @Override
+    protected void validateDialog(Button okButton) {
+        categoryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            okButton.setDisable(newValue == null || newValue.trim().length() < CATEGORY_MINIMUM_SYMBOLS);
+        });
+    }
+
+    @Override
     protected void setDialogData(Optional<Category> record){
         category = record.orElseGet(Category::new);
 
@@ -44,11 +55,11 @@ public class CategoryDialog extends BaseRecordDialog<Category> {
 
     @Override
     public String getDialogTitle() {
-        return "Категория";
+        return DIALOG_TITLE;
     }
 
     @Override
     public String getResourceAddress(){
-        return "/ui/categoryDialog.fxml";
+        return RESOURCE_ADDRESS;
     }
 }
