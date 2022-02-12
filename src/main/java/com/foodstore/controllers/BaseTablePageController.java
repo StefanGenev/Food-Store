@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class BaseTablePageController<T> implements Initializable {
+    // Главен контролер
+    private StoreController parentController;
 
     @FXML
     protected TableView<T> tableView; // Таблица
@@ -67,6 +69,10 @@ public abstract class BaseTablePageController<T> implements Initializable {
         refreshMenuItem.setOnAction(event -> reloadTable());
 
         menu.getItems().add(refreshMenuItem);
+    }
+
+    public void setParentController(StoreController parentController) {
+        this.parentController = parentController;
     }
 
     protected abstract void setColumnProperties();

@@ -10,8 +10,7 @@ import com.foodstore.services.ManufacturerService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -111,5 +110,30 @@ public class ProductController extends ModifiableTablePageController<Product> {
         dialog.setManufacturers(manufacturersList);
         dialog.setCategories(categoriesList);
         return dialog.showAndWait();
+    }
+
+    @Override
+    protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<Product> selectedRow) {
+        final MenuItem loadMenu = new MenuItem("Зареди");
+        loadMenu.setOnAction(event -> loadProduct(selectedRow));
+
+        loadMenu.disableProperty().bind(selectedRow.emptyProperty());
+
+        final MenuItem sellMenu = new MenuItem("Продай");
+        sellMenu.setOnAction(event -> loadProduct(selectedRow));
+
+        sellMenu.disableProperty().bind(selectedRow.emptyProperty());
+
+        contextMenu.getItems().addAll(loadMenu, sellMenu);
+
+        super.initializeRowContextMenu(contextMenu, selectedRow);
+    }
+
+
+    private void loadProduct(TableRow<Product> selectedRow){
+
+    }
+
+    private void SellProduct(TableRow<Product> selectedRow){
     }
 }

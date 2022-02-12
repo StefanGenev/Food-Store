@@ -11,6 +11,11 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 public class StoreData {
+    // Дефиниция на имена на глобални параметри
+    public static String CASH_PARAMETER = "CASH";
+    public static String STORE_NAME_PARAMETER = "STORE_NAME";
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +25,7 @@ public class StoreData {
     @Column(nullable = false)
     private String name; // Найменование на параметър
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DataType dataType; // Тип на данна
 

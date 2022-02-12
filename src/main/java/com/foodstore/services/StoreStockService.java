@@ -14,8 +14,6 @@ import java.util.Optional;
 
 @Service
 public class StoreStockService implements ReadableRegister<StoreStock> {
-    public static final String CASH_PARAMETER_NAME = "CASH";
-
     private final StoreStockRepository storeStockRepository; // Магазин - стоки
     private final StoreDataRepository storeDataRepository; // Параметри на магазин
 
@@ -51,7 +49,7 @@ public class StoreStockService implements ReadableRegister<StoreStock> {
     }
 
     public boolean updateCashRegister( Sale sale ){
-        Optional<StoreData> storeData = this.storeDataRepository.findStoreDataByName( CASH_PARAMETER_NAME );
+        Optional<StoreData> storeData = this.storeDataRepository.findStoreDataByName( StoreData.CASH_PARAMETER );
         if (storeData.isEmpty())
             return false;
 
@@ -66,7 +64,7 @@ public class StoreStockService implements ReadableRegister<StoreStock> {
     }
 
     public boolean updateCashRegister( Load load ){
-        Optional<StoreData> storeData = this.storeDataRepository.findStoreDataByName( CASH_PARAMETER_NAME );
+        Optional<StoreData> storeData = this.storeDataRepository.findStoreDataByName( StoreData.CASH_PARAMETER );
         if (storeData.isEmpty())
             return false;
 
