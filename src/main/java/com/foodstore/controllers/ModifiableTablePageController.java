@@ -18,19 +18,16 @@ public abstract class ModifiableTablePageController<T extends NameableEntity> ex
     protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<T> selectedRow) {
         // Дефинираме опциите в контекстно меню на ред от таблицата
         final MenuItem addMenuItem = new MenuItem("Добавяне");
+        addMenuItem.setOnAction(event -> addRecord());
 
-        // Действия при избор на менюто
-        addMenuItem.setOnAction(event -> AddRecord());
-
-        // Действия при избор на менюто
         final MenuItem updateMenuItem = new MenuItem("Редакция");
-        updateMenuItem.setOnAction(event -> UpdateRecord(selectedRow));
+        updateMenuItem.setOnAction(event -> updateRecord(selectedRow));
 
         // Ако няма селектиран запис не го използваме
         updateMenuItem.disableProperty().bind(selectedRow.emptyProperty());
 
         final MenuItem deleteMenuItem = new MenuItem("Изтриване");
-        deleteMenuItem.setOnAction(event -> DeleteRecord(selectedRow));
+        deleteMenuItem.setOnAction(event -> deleteRecord(selectedRow));
 
         deleteMenuItem.disableProperty().bind(selectedRow.emptyProperty());
 
@@ -46,7 +43,7 @@ public abstract class ModifiableTablePageController<T extends NameableEntity> ex
         final MenuItem addMenuItem = new MenuItem("Добавяне");
 
         // Действия при избор на менюто
-        addMenuItem.setOnAction(event -> AddRecord());
+        addMenuItem.setOnAction(event -> addRecord());
 
         menu.getItems().addAll(addMenuItem);
 
@@ -54,7 +51,7 @@ public abstract class ModifiableTablePageController<T extends NameableEntity> ex
     }
 
     // Добавяне на запис
-    protected void AddRecord(){
+    protected void addRecord(){
         // Визуализация на запис
         Optional<T> record = showSelectedRecord(Optional.empty());
         if (record.isEmpty())
@@ -69,7 +66,7 @@ public abstract class ModifiableTablePageController<T extends NameableEntity> ex
     }
 
     // Редакция на запис
-    protected void UpdateRecord(TableRow<T> selectedRow) {
+    protected void updateRecord(TableRow<T> selectedRow) {
         // Визуализация на запис
         Optional<T> record = showSelectedRecord(Optional.of(tableView.getItems().get(selectedRow.getIndex())));
         if (record.isEmpty())
@@ -84,7 +81,7 @@ public abstract class ModifiableTablePageController<T extends NameableEntity> ex
     }
 
     // Изтриване на запис
-    protected void DeleteRecord(TableRow<T> selectedRow) {
+    protected void deleteRecord(TableRow<T> selectedRow) {
         Optional<T> record = Optional.of(tableView.getItems().get(selectedRow.getIndex()));
         if (record.isEmpty())
             return;
