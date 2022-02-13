@@ -13,7 +13,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "store_stocks")
+@Table(name = "store_stocks", indexes = {
+    @Index(name = "UX_PRODUCT_AVAILABILITY_DATE", columnList = "product_id, availabilityDate", unique = true)
+})
 public class StoreStock extends Stock{
 
     @ManyToOne(cascade = CascadeType.MERGE)
