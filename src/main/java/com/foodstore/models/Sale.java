@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 // Табличен клас за продажба
 
@@ -21,6 +21,6 @@ public class Sale extends Stock {
     private Product product; // Продукт
 
     @Column(nullable = false)
-    private LocalDateTime dateOfSale; // Дата на продажба
+    private LocalDate dateOfSale; // Дата на продажба
 
 }

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 // Табличен клас за зареждане
 
@@ -21,6 +21,6 @@ public class Load extends Stock {
     private Product product; // Продукт
 
     @Column(nullable = false)
-    private LocalDateTime dateOfLoading; // Дата на зареждане
+    private LocalDate dateOfLoading; // Дата на зареждане
 
 }

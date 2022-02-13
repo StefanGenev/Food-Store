@@ -10,7 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 // Контролер за страница със зареждания
 
@@ -25,7 +25,7 @@ public class LoadController extends BaseTablePageController<Load> {
     private TableColumn<Load, Long> colQuantity;
 
     @FXML
-    private TableColumn<Load, LocalDateTime> colDateOfLoading;
+    private TableColumn<Load, LocalDate> colDateOfLoading;
 
     @Override
     protected void setColumnProperties() {

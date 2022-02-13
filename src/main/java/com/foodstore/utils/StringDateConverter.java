@@ -2,17 +2,17 @@ package com.foodstore.utils;
 
 import javafx.util.StringConverter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 // Клас за трансформация от дата към низ и обратно
 
-public class StringDateConverter extends StringConverter<LocalDateTime> {
-    private final String pattern = "dd/MM/yyyy HH:MM:SS";
+public class StringDateConverter extends StringConverter<LocalDate> {
+    private final String pattern = "dd/MM/yyyy";
     private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
 
     @Override
-    public String toString(LocalDateTime dateTime) {
+    public String toString(LocalDate dateTime) {
         if (dateTime != null) {
             return dateFormatter.format(dateTime);
         } else {
@@ -21,9 +21,9 @@ public class StringDateConverter extends StringConverter<LocalDateTime> {
     }
 
     @Override
-    public LocalDateTime fromString(String string) {
+    public LocalDate fromString(String string) {
         if (string != null && !string.isEmpty()) {
-            return LocalDateTime.parse(string, dateFormatter);
+            return LocalDate.parse(string, dateFormatter);
         } else {
             return null;
         }

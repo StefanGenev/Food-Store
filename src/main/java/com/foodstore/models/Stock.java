@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Stock {
+public class Stock extends NameableEntity{
 
     @Id
     @Column(name = "id", nullable = false)
@@ -22,4 +22,9 @@ public class Stock {
 
     @Column(nullable = false)
     private Double quantity; // Количество
+
+    @Override
+    public String getName() {
+        return "";
+    }
 }

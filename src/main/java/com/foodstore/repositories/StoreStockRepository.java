@@ -23,17 +23,21 @@ public interface StoreStockRepository extends JpaRepository<StoreStock, Long> {
     @Query(value = "SELECT * FROM STORE_STOCKS AS SS_RESULT\n" +
             "WHERE SS_RESULT.ID IN (\n" +
             "   SELECT ID FROM (\n" +
-            "       SELECT SS.PRODUCT_ID, SS.ID AS ID, MIN(DATEDIFF(SS.DATE_TIME, DATE(':dateTime'))) \n" +
+            "       SELECT SS.PRODUCT_ID, SS.ID AS ID\n" +
             "       FROM STORE_STOCKS AS SS\n" +
             "" +
             "       INNER JOIN PRODUCTS AS P\n" +
             "       ON P.ID = SS.PRODUCT_ID\n" +
             "" +
-            "       WHERE SS.DATE_TIME <= DATE(':dateTime')\n" +
-            "       AND P.CATEGORY_ID = :category_id\n" +
+            "       WHERE SS.AVAILABILITY_DATE = :#{#filter.availabilityDate}\n" +
+            "       AND P.CATEGORY_ID = :#{#filter.product.category.id}\n" +
             "" +
             "       GROUP BY SS.PRODUCT_ID, SS.ID\n" +
             "   ) AS SS_ID\n" +
             ") ", nativeQuery = true)
-    List<StoreStock> findStoreStockByCategoryForDate(@Param("dateTime") String dateTime, @Param("category_id") String categoryId);
+    List<StoreStock> findStoreStockByCategoryForDate(@Param("filter") StoreStock filter);
+
+    @Query(value = "SELECT MAX(ID) FROM STORE_STOCKS", nativeQuery = true)
+    long getMaxId();
+
 }

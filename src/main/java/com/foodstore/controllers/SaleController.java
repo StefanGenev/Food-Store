@@ -10,7 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 // Контролер за страница Продажби
 
@@ -25,7 +25,7 @@ public class SaleController extends BaseTablePageController<Sale> {
     private TableColumn<Sale, Long> colQuantity;
 
     @FXML
-    private TableColumn<Sale, LocalDateTime> colDateOfSale;
+    private TableColumn<Sale, LocalDate> colDateOfSale;
 
     @Override
     protected void setColumnProperties() {
