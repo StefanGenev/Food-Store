@@ -2,6 +2,7 @@ package com.foodstore.services;
 
 import com.foodstore.exceptions.NotFoundException;
 import com.foodstore.models.*;
+import com.foodstore.repositories.ProductRepo;
 import com.foodstore.repositories.StoreDataRepository;
 import com.foodstore.repositories.StoreStockRepository;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,13 @@ import java.util.Optional;
 public class StoreStockService implements ModifiableRegister<StoreStock> {
     private final StoreStockRepository storeStockRepository; // Магазин - стоки
     private final StoreDataRepository storeDataRepository; // Параметри на магазин
+    private final ProductRepo productRepo; // сервиз за продукти
+    private final LocalDate CURRENT_DATE = LocalDate.now();
 
-    public StoreStockService(StoreStockRepository storeStockRepository, StoreDataRepository storeDataRepository) {
+    public StoreStockService(StoreStockRepository storeStockRepository, StoreDataRepository storeDataRepository, ProductRepo productRepo) {
         this.storeStockRepository = storeStockRepository;
         this.storeDataRepository = storeDataRepository;
+        this.productRepo = productRepo;
     }
 
     public StoreStock addStoreStock(StoreStock storeStock) {
@@ -92,36 +96,33 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
         return false; // ако стигнем до тук, няма наличност към днешна дата
     }
 
-    @Override
-    public List<StoreStock> findAllRecords() { // актуализира наличността към днешна дата и връща всички записи
-        List<StoreStock> allStoreStocks = this.findAllStoreStocks(); // записи в момента
-        List<StoreStock> storeStocksToAddList = new ArrayList<>(); //  записи които ще добавим
+    // актуализира наличността към днешна дата
+    private void updateStoreStocks() {
+        List<Product> allProducts = this.productRepo.findAll(); // всички продукти в базата
 
-        long currentMaxID = this.storeStockRepository.getMaxId(); // взимаме последото ID
-        long counter = 1; // брояч за ID-тата
+        for (int i = 0; i < allProducts.size(); i++) { // търсим наличност към днешна дата за всеки продукт в базата
+            Product currentProduct = allProducts.get(i); // текущ продукт
+            // ако няма наличност към днешна дата
+            if (this.storeStockRepository.findStoreStockByProductAndAvailabilityDate(currentProduct, CURRENT_DATE).isEmpty())
+            {
+                // ще добавим наличност към днешна дата
+                StoreStock storeStockCurrentDate = new StoreStock();
+                storeStockCurrentDate.setProduct(currentProduct);
+                storeStockCurrentDate.setAvailabilityDate(CURRENT_DATE);
+                // взимаме количеството за близката до актуалната дата в базата
+                Optional<StoreStock> ssQuantity = this.storeStockRepository.findStoreStockByProductAndMaxAvailabilityDate(currentProduct);
+                storeStockCurrentDate.setQuantity(ssQuantity.isPresent() ? ssQuantity.get().getQuantity() : 0);
+                // взимаме си ново ID
+                storeStockCurrentDate.setId(this.storeStockRepository.getMaxId() + 1);
 
-        for (int i = 0; i < allStoreStocks.size(); i++) {
-
-            boolean isCurrentDateAvailable = false; // дали текущия продукт има наличност за днешна дата
-            StoreStock currentSS = allStoreStocks.get(i);
-            long currentProductId = currentSS.getProduct().getId(); // Id на текущия продукт
-
-            isCurrentDateAvailable = this.searchProductInStoreStocks(currentProductId, allStoreStocks) ||
-                                     this.searchProductInStoreStocks(currentProductId, storeStocksToAddList);
-
-            if (!currentSS.getAvailabilityDate().equals(LocalDate.now()) && !isCurrentDateAvailable) {
-                StoreStock storeStockToAdd = new StoreStock(); // нов запис
-                storeStockToAdd.setProduct(currentSS.getProduct());
-                storeStockToAdd.setQuantity(currentSS.getQuantity());
-                storeStockToAdd.setAvailabilityDate(LocalDate.now());
-                storeStockToAdd.setId(currentMaxID + counter);
-                counter++; // следващия запис да има ново ID
-
-                storeStocksToAddList.add(storeStockToAdd); // запазваме го в листа
+                this.storeStockRepository.saveAndFlush(storeStockCurrentDate);
             }
         }
+    }
 
-        this.storeStockRepository.saveAllAndFlush(storeStocksToAddList); // актуализираме към днещна дата
+    @Override
+    public List<StoreStock> findAllRecords() { // актуализира наличността към днешна дата и връща всички записи
+        this.updateStoreStocks(); // актуализира наличността към днешна дата
         return this.findAllStoreStocks(); // връща всички записи от таблицата
     }
 
