@@ -7,7 +7,7 @@ import com.foodstore.models.StoreStock;
 import com.foodstore.services.CategoryService;
 import com.foodstore.services.StoreStockService;
 import com.foodstore.utils.ProductTableCell;
-import com.foodstore.utils.StringDateConverter;
+import com.foodstore.utils.converters.StringDateConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

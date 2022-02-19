@@ -1,6 +1,6 @@
 package com.foodstore;
 
-import com.foodstore.utils.StageReadyEvent;
+import com.foodstore.utils.events.StageReadyEvent;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;

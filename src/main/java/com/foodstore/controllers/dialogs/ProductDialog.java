@@ -4,7 +4,9 @@ import com.foodstore.models.Category;
 import com.foodstore.models.Manufacturer;
 import com.foodstore.models.Product;
 import com.foodstore.models.Unit;
+import com.foodstore.utils.DoubleFormatFilter;
 import com.foodstore.utils.EntityStringConverter;
+import com.foodstore.utils.converters.StringDoubleConverter;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -12,10 +14,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.text.Text;
 import javafx.stage.Window;
+import javafx.util.StringConverter;
 
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.UnaryOperator;
 
 // Диалог за продукти
 
@@ -71,6 +77,7 @@ public class ProductDialog extends BaseRecordDialog<Product> {
         unitComboBox.getItems().setAll(Unit.values());
     }
 
+
     @Override
     protected void validateDialog(Button okButton) {
         okButton.disableProperty()
@@ -91,6 +98,8 @@ public class ProductDialog extends BaseRecordDialog<Product> {
 
         manufacturerComboBox.setConverter(new EntityStringConverter<>());
         categoryComboBox.setConverter(new EntityStringConverter<>());
+
+        initializePriceFields();
     }
 
     @Override
@@ -148,12 +157,24 @@ public class ProductDialog extends BaseRecordDialog<Product> {
         if (categoryComboBox.getValue() == null)
             fieldsAreInvalid.set(true);
 
-        if (loadPriceTextField.getText() == null || loadPriceTextField.getText().trim().isEmpty() || Double.parseDouble(loadPriceTextField.getText().trim()) <= 0.0)
+        if (loadPriceTextField.getText() == null || loadPriceTextField.getText().trim().isEmpty())
             fieldsAreInvalid.set(true);
 
-        if (sellPriceTextField.getText() == null || sellPriceTextField.getText().trim().isEmpty() || Double.parseDouble(sellPriceTextField.getText().trim()) <= 0.0)
+        if (sellPriceTextField.getText() == null || sellPriceTextField.getText().trim().isEmpty())
             fieldsAreInvalid.set(true);
 
         return fieldsAreInvalid.get();
+    }
+
+    private void initializePriceFields() {
+        UnaryOperator<TextFormatter.Change> filter = new DoubleFormatFilter();
+        StringConverter<Double> stringDoubleConverter = new StringDoubleConverter();
+
+        // Позволяваме писане само на числени стойности в полета за цени
+        TextFormatter<Double> loadPriceFormatter = new TextFormatter<>(stringDoubleConverter, 0.0, filter);
+        loadPriceTextField.setTextFormatter(loadPriceFormatter);
+
+        TextFormatter<Double> sellPriceFormatter = new TextFormatter<>(stringDoubleConverter, 0.0, filter);
+        sellPriceTextField.setTextFormatter(sellPriceFormatter);
     }
 }

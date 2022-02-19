@@ -1,4 +1,4 @@
-package com.foodstore.utils;
+package com.foodstore.utils.converters;
 
 import javafx.util.StringConverter;
 

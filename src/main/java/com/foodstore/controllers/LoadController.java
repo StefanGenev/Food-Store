@@ -3,7 +3,7 @@ package com.foodstore.controllers;
 import com.foodstore.models.Load;
 import com.foodstore.models.Product;
 import com.foodstore.utils.ProductTableCell;
-import com.foodstore.utils.StringDateConverter;
+import com.foodstore.utils.converters.StringDateConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;

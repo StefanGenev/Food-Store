@@ -1,4 +1,4 @@
-package com.foodstore.utils;
+package com.foodstore.utils.events;
 
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationEvent;
