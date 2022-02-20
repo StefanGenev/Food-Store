@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 // Диалог за филтър на справката по категория и по дата на наличност
 public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
-    private final String RESOURCE_ADDRESS = "/ui/productAvailabilityDialog.fxml";
+    private final String RESOURCE_ADDRESS = "/ui/dialogs/productAvailabilityDialog.fxml";
     private final String DIALOG_TITLE = "Филтър на справка по категории към дата";
     private final String DATE_TIME_FORMATTER = "dd/MM/yyyy";
 
@@ -93,7 +93,7 @@ public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
     private boolean checkForInvalidFields() {
         AtomicBoolean fieldsAreInvalid = new AtomicBoolean(false);
 
-        if (availabilityDateDatePicker.getValue() == null)
+        if (availabilityDateDatePicker.getValue() == null || availabilityDateDatePicker.getValue().toString().isEmpty())
             fieldsAreInvalid.set(true);
 
         if (categoryComboBox.getValue() == null)

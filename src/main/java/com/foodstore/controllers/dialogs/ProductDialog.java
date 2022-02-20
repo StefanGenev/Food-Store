@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.text.Text;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 
@@ -26,7 +25,7 @@ import java.util.function.UnaryOperator;
 // Диалог за продукти
 
 public class ProductDialog extends BaseRecordDialog<Product> {
-    private final String RESOURCE_ADDRESS = "/ui/productDialog.fxml";
+    private final String RESOURCE_ADDRESS = "/ui/dialogs/productDialog.fxml";
     private final String DIALOG_TITLE = "Продукти";
 
     // Полета на диалог

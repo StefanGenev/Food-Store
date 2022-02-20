@@ -50,22 +50,22 @@
             <HBox alignment="TOP_RIGHT" prefHeight="473.0" prefWidth="1000.0">
                 <TabPane fx:id="tabPane" prefHeight="499.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" translateY="-30.0">
                     <Tab text="Магазин">
-                        <fx:include fx:id="productAvailability" source="productAvailabilityPage.fxml" />
+                        <fx:include fx:id="productAvailability" source="pages/productAvailabilityPage.fxml" />
                     </Tab>
                     <Tab text="Продажби">
-                        <fx:include fx:id="sale" source="salesPage.fxml" />
+                        <fx:include fx:id="sale" source="pages/salesPage.fxml" />
                     </Tab>
                     <Tab text="Зареждания">
-                        <fx:include fx:id="load" source="loadsPage.fxml" />
+                        <fx:include fx:id="load" source="pages/loadsPage.fxml" />
                     </Tab>
                     <Tab text="Категории">
-                        <fx:include fx:id="category" source="categoriesPage.fxml" />
+                        <fx:include fx:id="category" source="pages/categoriesPage.fxml" />
                     </Tab>
                     <Tab text="Продукти">
-                        <fx:include fx:id="product" source="productsPage.fxml" />
+                        <fx:include fx:id="product" source="pages/productsPage.fxml" />
                     </Tab>
                     <Tab text="Производители">
-                        <fx:include fx:id="manufacturer" source="manufacturersPage.fxml" />
+                        <fx:include fx:id="manufacturer" source="pages/manufacturersPage.fxml" />
                     </Tab>
                 </TabPane>
             </HBox>

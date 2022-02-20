@@ -1,11 +1,11 @@
 package com.foodstore.services;
 
 import com.foodstore.exceptions.NotFoundException;
+import com.foodstore.models.PeriodFilter;
 import com.foodstore.models.Product;
 import com.foodstore.models.Sale;
 import com.foodstore.repositories.SaleRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,8 +28,12 @@ public class SaleService implements ReadableRegister<Sale> {
         return this.saleRepository.findSaleByProduct(product);
     }
 
-    public Sale findSaleById(Long id){
+    public Sale findSaleById(Long id) {
         return saleRepository.findSaleById(id)
                 .orElseThrow(() -> new NotFoundException("Не е намерена продажба с идентификатор: " + id));
+    }
+
+    public List<Sale> findSalesForPeriod(PeriodFilter periodFilter) {
+        return saleRepository.findSalesForPeriod(periodFilter);
     }
 }

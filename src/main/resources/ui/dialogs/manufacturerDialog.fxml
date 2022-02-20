@@ -8,10 +8,8 @@
     <content>
         <GridPane hgap="5" vgap="5">
 
-            <Label prefHeight="17.0" prefWidth="164.0" text="Име на производител:" GridPane.columnIndex="0"
-                   GridPane.rowIndex="2"/>
-            <TextField fx:id="manufacturerTextField" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1"
-                       GridPane.fillWidth="false" GridPane.rowIndex="2"/>
+            <Label prefHeight="17.0" prefWidth="164.0" text="Име на производител:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="manufacturerTextField" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.fillWidth="false" />
 
             <columnConstraints>
                 <ColumnConstraints/>

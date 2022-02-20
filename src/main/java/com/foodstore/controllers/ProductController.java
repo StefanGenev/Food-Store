@@ -134,6 +134,6 @@ public class ProductController extends ModifiableTablePageController<Product> {
 
     }
 
-    private void SellProduct(TableRow<Product> selectedRow){
+    private void sellProduct(TableRow<Product> selectedRow){
     }
 }

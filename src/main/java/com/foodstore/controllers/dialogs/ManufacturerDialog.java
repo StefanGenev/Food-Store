@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ManufacturerDialog extends BaseRecordDialog<Manufacturer> {
 
-    private final String RESOURCE_ADDRESS = "/ui/manufacturerDialog.fxml";
+    private final String RESOURCE_ADDRESS = "/ui/dialogs/manufacturerDialog.fxml";
     private final String DIALOG_TITLE = "Фирма/Производител";
 
     private final int MANUFACTURER_MINIMUM_SYMBOLS = 3;

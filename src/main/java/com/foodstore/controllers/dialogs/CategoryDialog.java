@@ -12,7 +12,7 @@ import java.util.Optional;
 // Диалог за данни на категория
 
 public class CategoryDialog extends BaseRecordDialog<Category> {
-    private final String RESOURCE_ADDRESS = "/ui/categoryDialog.fxml";
+    private final String RESOURCE_ADDRESS = "/ui/dialogs/categoryDialog.fxml";
     private final String DIALOG_TITLE = "Категория";
     private final int CATEGORY_MINIMUM_SYMBOLS = 3;
 
