@@ -1,39 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom , #3D7B70, #80D0C7);" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
     <top>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="1000.0">
             <GridPane hgap="1" layoutX="16.0" layoutY="7.0" prefHeight="13.0" prefWidth="975.0">
                 <Label fx:id="storeName" layoutX="30.0" layoutY="9.0" prefHeight="21.0" prefWidth="304.0" text="Име на магазин" GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <font>
-                        <Font name="Bookman Old Style Bold" size="18.0" />
+                        <Font name="Bookman Old Style Bold" size="24.0" />
                     </font>
                 </Label>
-                <Label layoutX="718.0" layoutY="7.0" prefHeight="21.0" prefWidth="100.0" text="Каса(лв):" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0">
+                <Label layoutX="718.0" layoutY="7.0" prefHeight="29.0" prefWidth="140.0" text="Каса(лв):" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0">
                     <font>
-                        <Font name="Bookman Old Style Bold" size="18.0" />
+                        <Font name="Bookman Old Style Bold" size="24.0" />
                     </font>
                 </Label>
-                <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="806.0" layoutY="9.0" prefHeight="21.0" prefWidth="78.0" text="100" textFill="#46565b" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="806.0" layoutY="9.0" prefHeight="21.0" prefWidth="78.0" text="100" GridPane.columnIndex="2" GridPane.rowIndex="0">
                     <font>
-                        <Font name="Bookman Old Style Bold" size="18.0" />
+                        <Font name="Bookman Old Style Bold" size="24.0" />
                     </font>
-                    <effect>
-                        <Lighting bumpInput="$null" diffuseConstant="2.0" specularConstant="0.6">
-                            <light>
-                                <Light.Distant />
-                            </light>
-                        </Lighting>
-                    </effect>
                 </Label>
                 <columnConstraints>
-                    <ColumnConstraints maxWidth="383.0" minWidth="224.0" percentWidth="95.0" prefWidth="285.0" />
-                    <ColumnConstraints maxWidth="164.0" minWidth="0.0" percentWidth="11.0" prefWidth="101.0" />
+                    <ColumnConstraints maxWidth="383.0" minWidth="224.0" percentWidth="87.0" prefWidth="285.0" />
+                    <ColumnConstraints maxWidth="164.0" minWidth="0.0" percentWidth="14.0" prefWidth="101.0" />
                     <ColumnConstraints maxWidth="95.0" minWidth="24.0" percentWidth="11.0" prefWidth="82.0" />
                 </columnConstraints>
                 <rowConstraints>
@@ -43,10 +35,9 @@
                 </rowConstraints>
             </GridPane>
         </AnchorPane>
-
     </top>
     <center>
-        <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+        <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../styles/tables.css" BorderPane.alignment="CENTER">
             <HBox alignment="TOP_RIGHT" prefHeight="473.0" prefWidth="1000.0">
                 <TabPane fx:id="tabPane" prefHeight="499.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" translateY="-30.0">
                     <Tab text="Магазин">
@@ -75,7 +66,7 @@
         <VBox prefHeight="13.0" prefWidth="1000.0">
             <Button fx:id="btnExit" alignment="CENTER" layoutX="916.0" layoutY="7.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="120.0" styleClass="background" text="Изход" textOverrun="CLIP" translateX="870.0" translateY="-5.0" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="0">
                 <font>
-                    <Font size="14.0" />
+                    <Font name="Bookman Old Style Bold" size="16.0" />
                 </font>
             </Button>
         </VBox>
