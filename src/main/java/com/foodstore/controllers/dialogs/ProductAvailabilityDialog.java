@@ -46,6 +46,9 @@ public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
         setOnShowing(dialogEvent -> Platform.runLater(() -> categoryComboBox.requestFocus()));
 
         categoryComboBox.setConverter(new EntityStringConverter<>());
+
+        availabilityDateDatePicker.getEditor().setDisable(true);
+        availabilityDateDatePicker.getEditor().setOpacity(1);
     }
 
     @Override

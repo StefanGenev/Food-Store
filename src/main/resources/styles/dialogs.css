@@ -1,0 +1,120 @@
+/* Dialog */
+.dialog-pane {
+    -fx-background-color: #6fbab0;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #2c2c2c;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: black;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2em;
+}
+
+/* Combo Box */
+
+.combo-box {
+    -fx-background-color: #396b61;
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell
+{
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.combo-box .list-cell:hover
+{
+    -fx-background-color: #396b61;
+}
+
+.combo-box .list-cell:selected
+{
+    -fx-background-color: #396b61;
+    -fx-text-fill: white;
+}
+
+.combo-box-base
+{
+    -fx-background-color: #396b61;
+    -fx-text-fill: white;
+}
+
+/* Text Field */
+.text-field {
+    -fx-focus-color: transparent;
+}
+
+
+/* Buttons */
+
+.button {
+    -fx-background-color: #396b61;
+    -fx-font-size: 16px;
+    -fx-text-fill: #2c2c2c;
+    -fx-background-radius: 10px;
+    -fx-focus-color: transparent;
+}
+.button:hover {
+    -fx-background-color: #3f786e;
+    -fx-text-fill: white;
+}
+.button:pressed {
+    -fx-background-color: #3f786e;
+    -fx-text-fill: white;
+}
+
+/* Date Picker */
+.date-picker .arrow-button {
+	-fx-background-color: #396b61;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: #396b61;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+.date-picker .cell {
+	-fx-background-color: white;
+}
+.date-picker .cell:hover {
+	-fx-background-color: #396b61;
+}
+.date-picker .cell:focused {
+	-fx-background-color: #396b61;
+}
+.date-picker .selected {
+	-fx-background-color: #396b61;
+	-fx-text-fill: white;
+}
+.date-picker .selected:focused {
+	-fx-background-color: #396b61;
+	-fx-text-fill: white;
+}
+.date-picker-popup{
+	-fx-border-color: transparent;
+}
+
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: white;
+}
+
+.date-picker-popup .day-name-cell:hover {
+	-fx-text-fill: white;
+}
+
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: white;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}

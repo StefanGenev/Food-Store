@@ -1,0 +1,30 @@
+root {
+  -fx-background-color: cornsilk;
+  -fx-padding: 10;
+}
+
+.context-menu {
+  -fx-background-color: white;
+}
+
+
+.menu-item .label {
+  -fx-fill:red;
+    -fx-font-family:tahoma;
+    -fx-font-size: 12px;
+    -fx-stroke:#C8CFD7;
+    -fx-strok-width:.25;
+}
+
+.menu-item:focused .label {
+  -fx-text-fill: white;
+}
+.menu-item{
+    -fx-border-width:0.50px;
+
+}
+.menu-item:focused {
+     -fx-background: -fx-accent;
+     -fx-background-color: #3D7B70;
+     -fx-text-fill: -fx-selection-bar-text;
+}

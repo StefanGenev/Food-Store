@@ -14,6 +14,7 @@ import java.util.Optional;
 // Базов клас за диалози за изобразяване и редакция на запис от база данни, с бутон Запис
 
 public abstract class BaseRecordDialog<T> extends Dialog<T> {
+    private final String DIALOG_STYLES_ADDRESS = "/styles/dialogs.css";
 
     @FXML
     protected ButtonType okayButtonType;
@@ -45,6 +46,9 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
         // Валидация на диалог
         final Button okButton = (Button) getDialogPane().lookupButton(okayButtonType);
         okButton.setDisable(true);
+
+        // Стилове на диалог
+        getDialogPane().getStylesheets().add(DIALOG_STYLES_ADDRESS);
 
         validateDialog(okButton);
 

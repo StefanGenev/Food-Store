@@ -1,3 +1,5 @@
+/* Buttons */
+
 .button {
     -fx-background-color: #396b61;
     -fx-font-size: 16px;
@@ -7,8 +9,9 @@
 }
 .button:hover {
     -fx-background-color: #3f786e;
+    -fx-text-fill: white;
 }
 .button:pressed {
     -fx-background-color: #3f786e;
-    -fx-rotate: 0.5
+    -fx-text-fill: white;
 }

@@ -2,34 +2,34 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<DialogPane prefHeight="100.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.2"
-            xmlns:fx="http://javafx.com/fxml/1">
+
+<DialogPane prefHeight="100.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
 
     <content>
-        <GridPane hgap="2" vgap="2">
+        <GridPane hgap="3" vgap="5">
 
-            <Label text="Категория:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <ComboBox fx:id="categoryComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Избери категория">
+            <Label text="Категория:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <ComboBox fx:id="categoryComboBox" prefHeight="25.0" prefWidth="217.0" promptText="Избери категория" GridPane.columnIndex="1" GridPane.rowIndex="0">
             </ComboBox>
 
-            <Label text="Наличност към дата:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <DatePicker fx:id="availabilityDateDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Ибери наличност към дата"/>
+            <Label text="Наличност към дата:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <DatePicker fx:id="availabilityDateDatePicker" prefHeight="25.0" prefWidth="217.0" promptText="Ибери наличност към дата" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <columnConstraints>
-                <ColumnConstraints/>
-                <ColumnConstraints hgrow="ALWAYS"/>
+                <ColumnConstraints maxWidth="144.0" minWidth="81.0" percentWidth="40.0" prefWidth="81.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="324.0" minWidth="200.0" percentWidth="60.0" prefWidth="324.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints/>
-                <RowConstraints/>
-                <RowConstraints/>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
             </rowConstraints>
         </GridPane>
     </content>
 
     <buttonTypes>
-        <ButtonType fx:id="okayButtonType" buttonData="OK_DONE" text="Справка"/>
-        <ButtonType buttonData="CANCEL_CLOSE" text="Затвори"/>
+        <ButtonType fx:id="okayButtonType" buttonData="OK_DONE" text="Справка" />
+        <ButtonType buttonData="CANCEL_CLOSE" text="Затвори" />
     </buttonTypes>
 
 </DialogPane>
