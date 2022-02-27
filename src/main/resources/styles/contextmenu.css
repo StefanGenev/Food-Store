@@ -1,12 +1,16 @@
+* {
+	-fx-white-color: #EDF5E1;
+	-fx-dark-blue-color: #05386B;
+}
+
 root {
   -fx-background-color: cornsilk;
   -fx-padding: 10;
 }
 
 .context-menu {
-  -fx-background-color: white;
+  -fx-background-color: -fx-white-color;
 }
-
 
 .menu-item .label {
   -fx-fill:red;
@@ -17,7 +21,7 @@ root {
 }
 
 .menu-item:focused .label {
-  -fx-text-fill: white;
+  -fx-text-fill: -fx-white-color;
 }
 .menu-item{
     -fx-border-width:0.50px;
@@ -25,6 +29,6 @@ root {
 }
 .menu-item:focused {
      -fx-background: -fx-accent;
-     -fx-background-color: #3D7B70;
+     -fx-background-color: -fx-dark-blue-color;
      -fx-text-fill: -fx-selection-bar-text;
 }

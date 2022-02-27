@@ -1,7 +1,12 @@
+* {
+	-fx-white-color: #EDF5E1;
+	-fx-dark-blue-color: #05386B;
+	-fx-blue-green-color: #379683;
+}
+
 /*Tables*/
 .table-view {
     -fx-background-color: transparent;
-
 }
 
 .table-view .column-header-background .filler {
@@ -13,8 +18,9 @@
 }
 
 .table-view .column-header-background{
-    -fx-background-color: #2d6359;
-    -fx-text-fill: #2c2c2c;
+    -fx-background-color: -fx-dark-blue-color;
+    -fx-text-fill: -fx-white-color;
+    -fx-text-background-color: -fx-white-color;
     -fx-font-size: 14px;
     -fx-background-radius: 7px 7px 0px 0px;
     -fx-background-insets: 0 11px 0 0;
@@ -23,9 +29,12 @@
 .table-view .show-hide-columns-button, .tree-table-view .show-hide-columns-button
 {
     -fx-background-color: transparent;
+    -fx-text-fill: -fx-dark-blue-color;
 }
 .table-view .column-header {
     -fx-background-color: transparent;
+    -fx-text-fill: -fx-white-color;
+    -fx-text-background-color: -fx-white-color;
 }
 .table-cell {
     -fx-border-color: transparent;
@@ -40,19 +49,26 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-background-color: -fx-dark-blue-color;
 }
 .table-row-cell: even{
     -fx-background-color: transparent;
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0.0em;
+    -fx-text-background-color: -fx-dark-blue-color;
 }
 .table-row-cell:hover:filled {
-    -fx-background-color: #2d6359;
-    -fx-text-background-color: white;
+    -fx-background-color: -fx-dark-blue-color;
+    -fx-text-background-color: -fx-white-color;
 }
 .table-row-cell:selected:filled {
-    -fx-background-color: #2d6359;
-    -fx-text-background-color: white;
+    -fx-background-color: -fx-dark-blue-color;
+    -fx-text-background-color: -fx-white-color;
+}
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+    -fx-font-size: 14px;
 }
 .table-view .virtual-flow .scroll-bar:vertical,
 .table-view .virtual-flow .scroll-bar:vertical .track,
@@ -94,22 +110,26 @@
 }
 .tab-pane .tab
 {
-    -fx-background-color: #2d6359;
+    -fx-background-color: -fx-dark-blue-color;
     -fx-focus-color: transparent;
+}
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: -fx-white-color;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
 .tab-pane .tab:selected
 {
     -fx-background-color: transparent;
+
 }
 
-.tab .tab-label {
-    -fx-alignment: CENTER;
-    -fx-text-fill: #2c2c2c;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+.tab:selected .tab-label {
+    -fx-text-fill: -fx-dark-blue-color;
 }
 
 .tab:hover .tab-label {
-    -fx-text-fill: #efefef;
+    -fx-text-fill: -fx-blue-green-color;
 }
