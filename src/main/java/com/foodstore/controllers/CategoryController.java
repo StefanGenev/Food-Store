@@ -32,4 +32,9 @@ public class CategoryController extends ModifiableTablePageController<Category> 
 
         return dialog.showAndWait();
     }
+
+    @Override
+    protected String getDeleteAlertMessage(Category record) {
+        return "Сигурни ли сте че искате да изтриете категория " + record.getCategoryName() + "?";
+    }
 }

@@ -5,17 +5,21 @@ import com.foodstore.models.Product;
 import com.foodstore.utils.ProductTableCell;
 import com.foodstore.utils.converters.StringDateConverter;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 // Контролер за страница със зареждания
 
 @Component
-public class LoadController extends BaseTablePageController<Load> {
+public class LoadController extends ModifiableTablePageController<Load> {
     // Колони на таблицата
 
     @FXML
@@ -38,5 +42,27 @@ public class LoadController extends BaseTablePageController<Load> {
         colProductName.setCellValueFactory(new PropertyValueFactory<>("product"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDateOfLoading.setCellValueFactory(new PropertyValueFactory<>("dateOfLoading"));
+    }
+
+    @Override
+    protected Optional<Load> showSelectedRecord(Optional<Load> recordOptional) {
+        return Optional.empty();
+    }
+
+    @Override
+    protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<Load> selectedRow) {
+        this.initializeTableContextMenu(contextMenu);
+    }
+
+    @Override
+    protected void initializeTableContextMenu(ContextMenu menu) {
+        // меню
+        final MenuItem refreshMenuItem = new MenuItem("Презареждане");
+
+        // Действия при избор на менюто
+        refreshMenuItem.setOnAction(event -> reloadTable());
+
+        // Добавяме дефинираните опции в контекстното меню
+        menu.getItems().addAll(refreshMenuItem);
     }
 }

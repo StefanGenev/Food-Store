@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,6 +58,13 @@ public class StoreController implements Initializable {
         productController.setParentController(this);
 
         storeName.setText(storeDataService.getParameterValue(StoreData.STORE_NAME_PARAMETER));
-        cashRegister.setText(storeDataService.getParameterValue(StoreData.CASH_PARAMETER));
+        refreshCashRegister();
+    }
+
+    public void refreshCashRegister(){
+        DoubleStringConverter doubleStringConverter = new DoubleStringConverter();
+        Double cash = doubleStringConverter.fromString(storeDataService.getParameterValue(StoreData.CASH_PARAMETER));
+        String cashStr = String.format("%.2f", cash);
+        cashRegister.setText(cashStr);
     }
 }

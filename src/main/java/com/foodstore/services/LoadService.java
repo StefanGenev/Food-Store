@@ -11,7 +11,7 @@ import java.util.List;
 // Клас за бизнес логика на зареждания
 
 @Service
-public class LoadService implements ReadableRegister<Load> {
+public class LoadService implements ModifiableRegister<Load> {
     private final LoadRepository loadRepository;
 
     public LoadService(LoadRepository loadRepository) {
@@ -30,5 +30,25 @@ public class LoadService implements ReadableRegister<Load> {
     public Load findLoadById(Long id){
         return loadRepository.findLoadById(id)
                 .orElseThrow(() -> new NotFoundException("Не е намерено зареждане с идентификатор: " + id));
+    }
+
+    public void addLoad(Load load){
+        load.setId(this.loadRepository.getCurrentId() + 1);
+        this.loadRepository.saveAndFlush(load);
+    }
+
+    @Override
+    public Load addRecord(Load record) {
+        return null;
+    }
+
+    @Override
+    public Load updateRecord(Load record) {
+        return null;
+    }
+
+    @Override
+    public void deleteRecord(Load record) {
+
     }
 }

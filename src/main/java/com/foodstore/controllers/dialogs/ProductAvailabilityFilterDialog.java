@@ -19,10 +19,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 
 // Диалог за филтър на справката по категория и по дата на наличност
-public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
+public class ProductAvailabilityFilterDialog extends BaseRecordDialog<StoreStock> {
     private final String RESOURCE_ADDRESS = "/ui/dialogs/productAvailabilityDialog.fxml";
     private final String DIALOG_TITLE = "Филтър на справка по категории към дата";
-    private final String DATE_TIME_FORMATTER = "dd/MM/yyyy";
 
     // Полета на диалога
     @FXML
@@ -37,7 +36,7 @@ public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
     // Категории
     private ObservableList<Category> categoriesList;
 
-    public ProductAvailabilityDialog(Window owner) {
+    public ProductAvailabilityFilterDialog(Window owner) {
         super(owner, null);
     }
 
@@ -45,6 +44,7 @@ public class ProductAvailabilityDialog extends BaseRecordDialog<StoreStock> {
     protected void additionalDialogInitialization() {
         setOnShowing(dialogEvent -> Platform.runLater(() -> categoryComboBox.requestFocus()));
 
+        availabilityDateDatePicker.getEditor().setDisable(true); // Можем да редактираме датата само от бутончето
         categoryComboBox.setConverter(new EntityStringConverter<>());
 
         availabilityDateDatePicker.getEditor().setDisable(true);

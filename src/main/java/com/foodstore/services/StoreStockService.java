@@ -5,11 +5,11 @@ import com.foodstore.models.*;
 import com.foodstore.repositories.ProductRepo;
 import com.foodstore.repositories.StoreDataRepository;
 import com.foodstore.repositories.StoreStockRepository;
+import javafx.util.converter.DoubleStringConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,11 +21,13 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
     private final StoreDataRepository storeDataRepository; // Параметри на магазин
     private final ProductRepo productRepo; // сервиз за продукти
     private final LocalDate CURRENT_DATE = LocalDate.now();
+    private final StoreDataService storeDataService;
 
-    public StoreStockService(StoreStockRepository storeStockRepository, StoreDataRepository storeDataRepository, ProductRepo productRepo) {
+    public StoreStockService(StoreStockRepository storeStockRepository, StoreDataRepository storeDataRepository, ProductRepo productRepo, StoreDataService storeDataService) {
         this.storeStockRepository = storeStockRepository;
         this.storeDataRepository = storeDataRepository;
         this.productRepo = productRepo;
+        this.storeDataService = storeDataService;
     }
 
     public StoreStock addStoreStock(StoreStock storeStock) {
@@ -42,6 +44,44 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
 
     public StoreStock updateStoreStock(StoreStock storeStock) {
         return storeStockRepository.saveAndFlush(storeStock);
+    }
+
+    public void updateStoreStockByProductAndAvailabilityDate(StoreStock storeStock, boolean isLoad) {
+        Optional<StoreStock> currentDateProduct =
+                this.storeStockRepository.getStoreStockByProductAndAvailabilityDate(storeStock.getProduct(), storeStock.getAvailabilityDate());
+
+        // ако няма продукт към днешна дата
+        if (currentDateProduct.isEmpty()) {
+            currentDateProduct = this.storeStockRepository.getClosestToGivenDateStoreStock(storeStock.getProduct(), storeStock.getAvailabilityDate());
+            if (currentDateProduct.isEmpty()) {
+                StoreStock toAdd = new StoreStock(storeStock.getProduct(), storeStock.getAvailabilityDate()
+                        , storeStock.getQuantity(), this.storeStockRepository.getMaxId() + 1);
+                this.storeStockRepository.saveAndFlush(toAdd);
+                currentDateProduct = Optional.of(toAdd);
+            } else {
+                // нека да го добавим
+                currentDateProduct.get().setProduct(storeStock.getProduct());
+                currentDateProduct.get().setAvailabilityDate(storeStock.getAvailabilityDate());
+                currentDateProduct.get().setQuantity(storeStock.getQuantity());
+                currentDateProduct.get().setId(this.storeStockRepository.getMaxId());
+                this.storeStockRepository.saveAndFlush(currentDateProduct.get());
+            }
+        }
+
+        // продукт към дата, който ще редактираме
+        Optional<StoreStock> storeStockToUpdate = this.storeStockRepository.getStoreStockByProductAndAvailabilityDate(
+                currentDateProduct.get().getProduct()
+                , currentDateProduct.get().getAvailabilityDate());
+
+        // ако зареждаме, добавяме количеството, иначе вадим от него
+        if (isLoad) {
+            storeStockToUpdate.get().setQuantity(currentDateProduct.get().getQuantity() + storeStock.getQuantity());
+        } else {
+            storeStockToUpdate.get().setQuantity(currentDateProduct.get().getQuantity() - storeStock.getQuantity());
+        }
+
+        // накрая редактираме storestock-а
+        this.storeStockRepository.saveAndFlush(storeStockToUpdate.get());
     }
 
     public StoreStock findLoadById(Long id) {
@@ -75,7 +115,7 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
             return false;
 
         double cash = Double.parseDouble(storeData.get().getValue());
-        cash += load.getQuantity() * load.getProduct().getLoadPrice();
+        cash -= load.getQuantity() * load.getProduct().getLoadPrice();
 
         storeData.get().setValue(Double.toString(cash));
 
@@ -103,8 +143,7 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
         for (int i = 0; i < allProducts.size(); i++) { // търсим наличност към днешна дата за всеки продукт в базата
             Product currentProduct = allProducts.get(i); // текущ продукт
             // ако няма наличност към днешна дата
-            if (this.storeStockRepository.findStoreStockByProductAndAvailabilityDate(currentProduct, CURRENT_DATE).isEmpty())
-            {
+            if (this.storeStockRepository.findStoreStockByProductAndAvailabilityDate(currentProduct, CURRENT_DATE).isEmpty()) {
                 // ще добавим наличност към днешна дата
                 StoreStock storeStockCurrentDate = new StoreStock();
                 storeStockCurrentDate.setProduct(currentProduct);
@@ -143,5 +182,16 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
 
     public List<StoreStock> doFilterSpr(StoreStock filter) {
         return this.storeStockRepository.findStoreStockByCategoryForDate(filter);
+    }
+
+    public List<StoreStock> takeCurrentDateAvailability() {
+        return this.storeStockRepository.findStoreStockForCurrentDate();
+    }
+
+    public Double getCash() {
+        DoubleStringConverter doubleStringConverter = new DoubleStringConverter();
+        Double cash = doubleStringConverter.fromString(
+                this.storeDataService.getParameterValue(StoreData.CASH_PARAMETER));
+        return cash;
     }
 }

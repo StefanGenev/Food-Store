@@ -18,10 +18,10 @@ public class Stock extends NameableEntity{
 
     @Id
     @Column(name = "id", nullable = false)
-    private Long id; // Идентификатор
+    protected Long id; // Идентификатор
 
     @Column(nullable = false)
-    private Double quantity; // Количество
+    protected Double quantity; // Количество
 
     @Override
     public String getName() {

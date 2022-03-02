@@ -27,6 +27,10 @@ public abstract class BaseTablePageController<T> implements Initializable {
     // Списък на записите
     protected ObservableList<T> recordsList = FXCollections.observableArrayList();
 
+    protected StoreController getParentController() {
+        return this.parentController;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

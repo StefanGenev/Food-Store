@@ -30,4 +30,10 @@ public class StoreStock extends Stock{
         this.setQuantity(quantity);
     }
 
+    public StoreStock(Product product, LocalDate localDate, Double quantity, long id) {
+        this.setProduct(product);
+        this.setQuantity(quantity);
+        this.availabilityDate = localDate;
+        this.id = id;
+    }
 }

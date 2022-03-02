@@ -1,6 +1,6 @@
 package com.foodstore.controllers;
 
-import com.foodstore.controllers.dialogs.ProductAvailabilityDialog;
+import com.foodstore.controllers.dialogs.ProductAvailabilityFilterDialog;
 import com.foodstore.models.Category;
 import com.foodstore.models.Product;
 import com.foodstore.models.StoreStock;
@@ -82,7 +82,7 @@ public class ProductAvailabilityController extends ModifiableTablePageController
         ObservableList<Category> categoriesList = FXCollections.observableArrayList();
         categoriesList.addAll(categoryService.findAllRecords());
 
-        ProductAvailabilityDialog dialog = new ProductAvailabilityDialog(owner);
+        ProductAvailabilityFilterDialog dialog = new ProductAvailabilityFilterDialog(owner);
         dialog.setCategories(categoriesList);
         return dialog.showAndWait();
     }
@@ -109,12 +109,12 @@ public class ProductAvailabilityController extends ModifiableTablePageController
     }
 
     @Override
-    protected void loadRecordsFromDB() { // пренаписваме refresh-ването на листа, за да можем да избираме кога да викаме всички резултати и кога филтъра на справката
+    protected void loadRecordsFromDB() { // пренаписваме refresh-ването на листа, за да можем да избираме кога да викаме текуща наличност и кога филтъра на справката
         recordsList.clear();
         if(this.isFilterSpr){
             recordsList.addAll(this.storeStockService.doFilterSpr(this.storeStock));
         }else{
-            recordsList.addAll(this.storeStockService.findAllRecords());
+            recordsList.addAll(this.storeStockService.takeCurrentDateAvailability());
         }
         this.isFilterSpr = false;
     }
@@ -128,7 +128,7 @@ public class ProductAvailabilityController extends ModifiableTablePageController
     protected void initializeTableContextMenu(ContextMenu menu) {
         // меню
         final MenuItem doFilterSpr = new MenuItem("Филтър на справката");
-        final MenuItem refreshMenuItem = new MenuItem("Обща наличност");
+        final MenuItem refreshMenuItem = new MenuItem("Текуща наличност");
 
         // Действия при избор на менюто
         refreshMenuItem.setOnAction(event -> reloadTable());

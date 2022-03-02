@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane prefHeight="100.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+
+    <content>
+        <VBox prefHeight="382.0" prefWidth="353.0" spacing="5.0">
+            <GridPane hgap="2" vgap="2">
+                <Label text="Продукт:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <ComboBox fx:id="productComboBox" promptText="Избери продукт" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                </ComboBox>
+
+                <Label text="Количество на зареждане:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="quantityTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="0"/>
+
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+        </VBox>
+    </content>
+
+    <buttonTypes>
+        <ButtonType fx:id="okayButtonType" buttonData="OK_DONE" text="Зареди" />
+        <ButtonType buttonData="CANCEL_CLOSE" text="Затвори" />
+    </buttonTypes>
+
+</DialogPane>

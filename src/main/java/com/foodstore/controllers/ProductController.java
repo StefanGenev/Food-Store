@@ -1,12 +1,10 @@
 package com.foodstore.controllers;
 
+import com.foodstore.controllers.dialogs.LoadDialog;
 import com.foodstore.controllers.dialogs.ProductDialog;
-import com.foodstore.models.Category;
-import com.foodstore.models.Manufacturer;
-import com.foodstore.models.Product;
-import com.foodstore.models.Unit;
-import com.foodstore.services.CategoryService;
-import com.foodstore.services.ManufacturerService;
+import com.foodstore.controllers.dialogs.SaleDialog;
+import com.foodstore.models.*;
+import com.foodstore.services.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +15,7 @@ import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 // Контролер за страницата с категориите продукти
@@ -47,6 +46,18 @@ public class ProductController extends ModifiableTablePageController<Product> {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private SaleService saleService;
+
+    @Autowired
+    private LoadService loadService;
+
+    @Autowired
+    private StoreStockService storeStockService;
 
     @Override
     protected void setColumnProperties() {
@@ -120,7 +131,7 @@ public class ProductController extends ModifiableTablePageController<Product> {
         loadMenu.disableProperty().bind(selectedRow.emptyProperty());
 
         final MenuItem sellMenu = new MenuItem("Продай");
-        sellMenu.setOnAction(event -> loadProduct(selectedRow));
+        sellMenu.setOnAction(event -> sellProduct(selectedRow));
 
         sellMenu.disableProperty().bind(selectedRow.emptyProperty());
 
@@ -130,10 +141,93 @@ public class ProductController extends ModifiableTablePageController<Product> {
     }
 
 
-    private void loadProduct(TableRow<Product> selectedRow){
+    private static Optional<StoreStock> openDialogEntry(TableRow<Product> selectedRow) {
+        // подготвяме полето за диалога
+        StoreStock storeStock = new StoreStock();
+        storeStock.setQuantity(0.0);
+        if (selectedRow.isEmpty()) {
+            Product product = new Product();
+            Category category = new Category();
+            product.setCategory(category);
+            storeStock.setProduct(product);
+        } else {
+            storeStock.setProduct(selectedRow.getItem());
+        }
 
+        return Optional.of(storeStock);
     }
 
-    private void sellProduct(TableRow<Product> selectedRow){
+    private void loadProduct(TableRow<Product> selectedRow) {
+        Optional<StoreStock> dialogParam = openDialogEntry(selectedRow);
+
+        // отваряме диалога
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        LoadDialog loadDialog = new LoadDialog(owner, dialogParam, this.storeStockService.getCash());
+
+        // подаваме му листа с продуктите
+        ObservableList<Product> productsList = FXCollections.observableArrayList();
+        productsList.addAll(this.productService.findAllRecords());
+        loadDialog.setProducts(productsList);
+
+        // чакаме отговор от диалога
+        dialogParam = loadDialog.showAndWait();
+
+        // бизнес логика:
+        if (dialogParam.isPresent()) {
+            // добавяме в sales таблица
+            Load load = new Load();
+            load.setDateOfLoading(LocalDate.now());
+            load.setProduct(dialogParam.get().getProduct());
+            load.setQuantity(dialogParam.get().getQuantity());
+            this.loadService.addLoad(load);
+
+            // редактираме/добавяме в storestocks
+            this.storeStockService.updateStoreStockByProductAndAvailabilityDate(dialogParam.get(), true);
+
+            // каса
+            if (!this.storeStockService.updateCashRegister(load)) {
+                //TODOR: alert
+            }
+            getParentController().refreshCashRegister(); // обновяваме касата
+        } else {
+            //TODOR: alert
+        }
+    }
+
+    private void sellProduct(TableRow<Product> selectedRow) {
+        Optional<StoreStock> dialogParam = openDialogEntry(selectedRow);
+
+        // отваряме диалога //TODO количество в момента
+        Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        SaleDialog saleDialog = new SaleDialog(owner, dialogParam);
+
+        // подаваме му листа с продуктите
+        ObservableList<Product> productsList = FXCollections.observableArrayList();
+        productsList.addAll(this.productService.findAllRecords());
+        saleDialog.setProducts(productsList);
+
+        // чакаме отговор от диалога
+        dialogParam = saleDialog.showAndWait();
+
+        // бизнес логика:
+        if (dialogParam.isPresent()) {
+            // sales таблица
+            Sale sale = new Sale();
+            sale.setDateOfSale(LocalDate.now());
+            sale.setProduct(dialogParam.get().getProduct());
+            sale.setQuantity(dialogParam.get().getQuantity());
+            this.saleService.addSale(sale);
+
+            // storestocks
+            this.storeStockService.updateStoreStockByProductAndAvailabilityDate(dialogParam.get(), false);
+
+            // каса
+            if (!this.storeStockService.updateCashRegister(sale)) {
+                //TODO:R alert
+            }
+            getParentController().refreshCashRegister(); // обновяваме касата
+        } else {
+            //TODO:R alert
+        }
     }
 }

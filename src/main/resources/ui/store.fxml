@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #5CDB95;" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #5CDB95;" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
     <top>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="1000.0">
             <GridPane hgap="1" layoutX="16.0" layoutY="7.0" prefHeight="13.0" prefWidth="975.0">
@@ -18,15 +18,15 @@
                         <Font name="Bookman Old Style Bold" size="24.0" />
                     </font>
                 </Label>
-                <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="806.0" layoutY="9.0" prefHeight="21.0" prefWidth="78.0" text="100" textFill="#05386b" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="806.0" layoutY="9.0" prefHeight="30.0" prefWidth="164.0" text="100" textFill="#05386b" GridPane.columnIndex="2" GridPane.rowIndex="0">
                     <font>
                         <Font name="Bookman Old Style Bold" size="24.0" />
                     </font>
                 </Label>
                 <columnConstraints>
-                    <ColumnConstraints maxWidth="383.0" minWidth="224.0" percentWidth="87.0" prefWidth="285.0" />
+                    <ColumnConstraints maxWidth="383.0" minWidth="224.0" percentWidth="79.0" prefWidth="285.0" />
                     <ColumnConstraints maxWidth="164.0" minWidth="0.0" percentWidth="14.0" prefWidth="101.0" />
-                    <ColumnConstraints maxWidth="95.0" minWidth="24.0" percentWidth="11.0" prefWidth="82.0" />
+                    <ColumnConstraints maxWidth="95.0" minWidth="24.0" percentWidth="19.0" prefWidth="82.0" />
                 </columnConstraints>
                 <rowConstraints>
                     <RowConstraints />

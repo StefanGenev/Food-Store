@@ -29,4 +29,8 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
                    "WHERE DATE_OF_SALE BETWEEN :#{#filter.dateFrom} AND :#{#filter.dateTo}\n"
                    , nativeQuery = true)
     List<Sale> findSalesForPeriod(@Param("filter")PeriodFilter periodFilter);
+
+    // Взима докъдето е стигнал брояча на уникалния ключ на таблицата с продажбите
+    @Query(value = "SELECT CASE WHEN MAX(ID) IS NULL THEN 0 ELSE MAX(ID) END FROM SALES", nativeQuery = true)
+    long getCurrentId();
 }

@@ -25,7 +25,7 @@ import java.util.Optional;
 // Контролер за страница Продажби
 
 @Component
-public class SaleController extends BaseTablePageController<Sale> {
+public class SaleController extends ModifiableTablePageController<Sale> {
 
     // Колони на таблицата
     @FXML
@@ -56,30 +56,29 @@ public class SaleController extends BaseTablePageController<Sale> {
     }
 
     @Override
-    protected void initializeTableContextMenu(ContextMenu menu) {
-        // Меню - филтър по период
-        addPeriodFilterMenu(menu);
-
-        super.initializeTableContextMenu(menu);
+    protected Optional<Sale> showSelectedRecord(Optional<Sale> recordOptional) {
+        return Optional.empty();
     }
 
     @Override
-    protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<Sale> selectedRow) {
-        // Меню - филтър по период
-        addPeriodFilterMenu(contextMenu);
-
-        super.initializeRowContextMenu(contextMenu, selectedRow);
-    }
-
-    private void addPeriodFilterMenu(ContextMenu menu) {
+    protected void initializeTableContextMenu(ContextMenu menu) {
         // Меню
         final MenuItem periodFilterMenu = new MenuItem("Филтър по период");
+        final MenuItem refreshMenuItem = new MenuItem("Презареждане");
+
+        // Действия при избор на менюто
+        refreshMenuItem.setOnAction(event -> reloadTable());
 
         // Действия при избор на менюто
         periodFilterMenu.setOnAction(event -> filterByPeriod());
 
         // Добавяме дефинираните опции в контекстното меню
-        menu.getItems().addAll(periodFilterMenu);
+        menu.getItems().addAll(periodFilterMenu, refreshMenuItem);
+    }
+
+    @Override
+    protected void initializeRowContextMenu(ContextMenu contextMenu, TableRow<Sale> selectedRow) {
+        this.initializeTableContextMenu(contextMenu);
     }
 
     private void filterByPeriod() {
