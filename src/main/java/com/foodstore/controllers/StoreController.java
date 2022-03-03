@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 @Component
 @FxmlView("/ui/store.fxml")
 public class StoreController implements Initializable {
+    private final String CASH_REGISTER_PRETEXT = "Каса(лв): ";
 
     // Контроли
     @FXML
@@ -65,6 +66,6 @@ public class StoreController implements Initializable {
         DoubleStringConverter doubleStringConverter = new DoubleStringConverter();
         Double cash = doubleStringConverter.fromString(storeDataService.getParameterValue(StoreData.CASH_PARAMETER));
         String cashStr = String.format("%.2f", cash);
-        cashRegister.setText(cashStr);
+        cashRegister.setText(CASH_REGISTER_PRETEXT + cashStr);
     }
 }

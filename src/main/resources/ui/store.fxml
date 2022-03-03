@@ -4,71 +4,51 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #5CDB95;" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #5CDB95;" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.foodstore.controllers.StoreController">
     <top>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="1000.0">
-            <GridPane hgap="1" layoutX="16.0" layoutY="7.0" prefHeight="13.0" prefWidth="975.0">
-                <Label fx:id="storeName" layoutX="30.0" layoutY="9.0" prefHeight="21.0" prefWidth="304.0" text="Име на магазин" textFill="#05386b" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                    <font>
-                        <Font name="Bookman Old Style Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="718.0" layoutY="7.0" prefHeight="29.0" prefWidth="140.0" text="Каса(лв):" textFill="#05386b" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0">
-                    <font>
-                        <Font name="Bookman Old Style Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="806.0" layoutY="9.0" prefHeight="30.0" prefWidth="164.0" text="100" textFill="#05386b" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                    <font>
-                        <Font name="Bookman Old Style Bold" size="24.0" />
-                    </font>
-                </Label>
-                <columnConstraints>
-                    <ColumnConstraints maxWidth="383.0" minWidth="224.0" percentWidth="79.0" prefWidth="285.0" />
-                    <ColumnConstraints maxWidth="164.0" minWidth="0.0" percentWidth="14.0" prefWidth="101.0" />
-                    <ColumnConstraints maxWidth="95.0" minWidth="24.0" percentWidth="19.0" prefWidth="82.0" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                </rowConstraints>
-            </GridPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="125.0" prefWidth="1000.0" BorderPane.alignment="TOP_CENTER">
+            <Label fx:id="storeName" layoutX="30.0" layoutY="9.0" prefHeight="21.0" prefWidth="304.0" text="Име на магазин" textFill="#05386b" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <font>
+                    <Font name="Bookman Old Style Bold" size="24.0" />
+                </font>
+            </Label>
+            <Label fx:id="cashRegister" graphicTextGap="6.0" layoutX="836.0" layoutY="11.0" prefHeight="29.0" prefWidth="238.0" text="Каса(лв): 100,00" textFill="#05386b" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                <font>
+                    <Font name="Bookman Old Style Bold" size="24.0" />
+                </font>
+            </Label>
+            <TabPane fx:id="tabPane" layoutY="-7.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="996.0" stylesheets="@../styles/tables.css" tabClosingPolicy="UNAVAILABLE" translateY="50.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0">
+                <Tab text="Магазин">
+                    <fx:include fx:id="productAvailability" source="pages/productAvailabilityPage.fxml" />
+                </Tab>
+                <Tab text="Продажби">
+                    <fx:include fx:id="sale" source="pages/salesPage.fxml" />
+                </Tab>
+                <Tab text="Зареждания">
+                    <fx:include fx:id="load" source="pages/loadsPage.fxml" />
+                </Tab>
+                <Tab text="Категории">
+                    <fx:include fx:id="category" source="pages/categoriesPage.fxml" />
+                </Tab>
+                <Tab text="Продукти">
+                    <fx:include fx:id="product" source="pages/productsPage.fxml" />
+                </Tab>
+                <Tab text="Производители">
+                    <fx:include fx:id="manufacturer" source="pages/manufacturersPage.fxml" />
+                </Tab>
+            </TabPane>
         </AnchorPane>
     </top>
     <center>
-        <VBox alignment="TOP_RIGHT" maxHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../styles/tables.css" BorderPane.alignment="CENTER">
-            <HBox alignment="TOP_RIGHT" prefHeight="473.0" prefWidth="1000.0">
-                <TabPane fx:id="tabPane" prefHeight="499.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" translateY="-30.0">
-                    <Tab text="Магазин">
-                        <fx:include fx:id="productAvailability" source="pages/productAvailabilityPage.fxml" />
-                    </Tab>
-                    <Tab text="Продажби">
-                        <fx:include fx:id="sale" source="pages/salesPage.fxml" />
-                    </Tab>
-                    <Tab text="Зареждания">
-                        <fx:include fx:id="load" source="pages/loadsPage.fxml" />
-                    </Tab>
-                    <Tab text="Категории">
-                        <fx:include fx:id="category" source="pages/categoriesPage.fxml" />
-                    </Tab>
-                    <Tab text="Продукти">
-                        <fx:include fx:id="product" source="pages/productsPage.fxml" />
-                    </Tab>
-                    <Tab text="Производители">
-                        <fx:include fx:id="manufacturer" source="pages/manufacturersPage.fxml" />
-                    </Tab>
-                </TabPane>
-            </HBox>
-        </VBox>
+
     </center>
     <bottom>
-        <VBox prefHeight="13.0" prefWidth="1000.0">
-            <Button fx:id="btnExit" alignment="CENTER" layoutX="916.0" layoutY="7.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="120.0" styleClass="background" text="Изход" textOverrun="CLIP" translateX="870.0" translateY="-5.0" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="1000.0" BorderPane.alignment="BOTTOM_RIGHT">
+            <Button fx:id="btnExit" alignment="CENTER" layoutX="887.0" layoutY="96.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#exit" prefHeight="37.0" prefWidth="99.0" styleClass="background" text="Изход" textOverrun="CLIP" translateY="-100.0" AnchorPane.bottomAnchor="-94.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="96.0">
                 <font>
                     <Font name="Bookman Old Style Bold" size="16.0" />
                 </font>
             </Button>
-        </VBox>
+        </AnchorPane>
     </bottom>
 </BorderPane>

@@ -124,24 +124,12 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
         return true;
     }
 
-    // Търси продукт в лист от StoreStocks, по днешна дата
-    private boolean searchProductInStoreStocks(long productId, List<StoreStock> storeStocksList) {
-        for (int j = 0; j < storeStocksList.size(); j++) { // въртим записите в масива
-            StoreStock currentSS = storeStocksList.get(j);
-            if (currentSS.getProduct().getId().equals(productId)) // търсим по ID на продукт
-                if (currentSS.getAvailabilityDate().equals(LocalDate.now())) { // и днешна дата
-                    return true; // има наличност към днешна дата, излизаме
-                }
-        }
-        return false; // ако стигнем до тук, няма наличност към днешна дата
-    }
-
     // актуализира наличността към днешна дата
     private void updateStoreStocks() {
         List<Product> allProducts = this.productRepo.findAll(); // всички продукти в базата
 
-        for (int i = 0; i < allProducts.size(); i++) { // търсим наличност към днешна дата за всеки продукт в базата
-            Product currentProduct = allProducts.get(i); // текущ продукт
+        // текущ продукт
+        for (Product currentProduct : allProducts) { // търсим наличност към днешна дата за всеки продукт в базата
             // ако няма наличност към днешна дата
             if (this.storeStockRepository.findStoreStockByProductAndAvailabilityDate(currentProduct, CURRENT_DATE).isEmpty()) {
                 // ще добавим наличност към днешна дата
@@ -185,13 +173,13 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
     }
 
     public List<StoreStock> takeCurrentDateAvailability() {
+        this.updateStoreStocks(); // актуализира наличността към днешна дата
         return this.storeStockRepository.findStoreStockForCurrentDate();
     }
 
     public Double getCash() {
         DoubleStringConverter doubleStringConverter = new DoubleStringConverter();
-        Double cash = doubleStringConverter.fromString(
+        return doubleStringConverter.fromString(
                 this.storeDataService.getParameterValue(StoreData.CASH_PARAMETER));
-        return cash;
     }
 }
