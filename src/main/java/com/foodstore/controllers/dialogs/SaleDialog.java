@@ -6,7 +6,8 @@ import javafx.stage.Window;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public class SaleDialog extends BaseTradeDialog<StoreStock>{
+// Диалог за продажби
+public class SaleDialog extends BaseTradeDialog{
     private final String RESOURCE_ADDRESS = "/ui/dialogs/saleDialog.fxml";
     private final String DIALOG_TITLE = "Продажба на продукт";
 
@@ -32,10 +33,5 @@ public class SaleDialog extends BaseTradeDialog<StoreStock>{
         storeStock.setAvailabilityDate(LocalDate.now());
 
         return storeStock;
-    }
-
-    @Override
-    protected void setDialogData(Optional<StoreStock> record) { // попълва comboBox-а
-        record.ifPresent(storeStock -> this.productComboBox.setValue(storeStock.getProduct()));
     }
 }

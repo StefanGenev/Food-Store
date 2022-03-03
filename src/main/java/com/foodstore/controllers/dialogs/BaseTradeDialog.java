@@ -1,8 +1,10 @@
 package com.foodstore.controllers.dialogs;
 
 import com.foodstore.models.Product;
+import com.foodstore.models.StoreStock;
 import com.foodstore.utils.EntityStringConverter;
 import com.foodstore.utils.IntegerFormatFilter;
+import com.foodstore.utils.converters.StringDoubleConverter;
 import com.foodstore.utils.converters.StringIntegerConverter;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -18,7 +20,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.UnaryOperator;
 
-public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
+public abstract class BaseTradeDialog extends BaseRecordDialog<StoreStock> {
     // Полета на диалога
     @FXML
     protected TextField quantityTextField;
@@ -29,13 +31,25 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
     @FXML
     protected TextField totalPriceTextField;
 
-    protected Optional<T> record; // записа на диалога
+    protected StoreStock record; // записа на диалога
 
     // Продукти
     protected ObservableList<Product> productsList;
 
-    public BaseTradeDialog(Window owner, Optional<T> record) {
+    public BaseTradeDialog(Window owner, Optional<StoreStock> record) {
         super(owner, record);
+    }
+
+    @Override
+    protected void setDialogData(Optional<StoreStock> record) {
+        super.setDialogData(record);
+
+        this.record = record.orElseGet(StoreStock::new);
+
+        if (record.isPresent()) {
+            this.productComboBox.setValue(record.get().getProduct());
+            this.setTotalPriceField(record.get().getProduct());
+        }
     }
 
     @Override
@@ -45,15 +59,13 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
         this.totalPriceTextField.setDisable(true);
         productComboBox.setConverter(new EntityStringConverter<>());
         initializeQuantityFields();
+
+        // При промяна на селектиран продукт
+        productComboBox.valueProperty().addListener((observable, oldValue, newValue) -> onChangeSelectedProduct(newValue));
     }
 
     @Override
-    protected void setDialogData(Optional<T> record) {
-        super.setDialogData(record);
-    }
-
-    @Override
-    protected T getDialogData() { // взима въведеното в диалога
+    protected StoreStock getDialogData() { // взима въведеното в диалога
         return super.getDialogData();
     }
 
@@ -74,7 +86,7 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
     @Override
     protected void validateDialog(Button okButton) { // валидираме полетата на диалога
         quantityTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                okButton.setDisable(!this.validateQuantity(newValue));
+            okButton.setDisable(!this.validateQuantity(newValue));
         });
     }
 
@@ -95,5 +107,19 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
             fieldsAreInvalid.set(true);
 
         return fieldsAreInvalid.get();
+    }
+
+    protected void onChangeSelectedProduct(Product product) {
+        // попълва default-на стойност на количеството
+        this.quantityTextField.setText("1");
+        setTotalPriceField(product);
+    }
+
+    protected void setTotalPriceField(Product product) { // цена на зареждането = количество * цена 1 ед.
+        StringIntegerConverter stringIntegerConverter = new StringIntegerConverter();
+        int quantity = stringIntegerConverter.fromString(this.quantityTextField.getText());
+
+        double totalPrice = quantity * product.getLoadPrice();
+        this.totalPriceTextField.setText(new StringDoubleConverter().toString(totalPrice));
     }
 }
