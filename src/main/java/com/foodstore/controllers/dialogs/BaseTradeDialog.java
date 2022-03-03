@@ -5,7 +5,6 @@ import com.foodstore.utils.EntityStringConverter;
 import com.foodstore.utils.IntegerFormatFilter;
 import com.foodstore.utils.converters.StringIntegerConverter;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,13 +18,18 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.UnaryOperator;
 
-public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T>{
+public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T> {
     // Полета на диалога
     @FXML
     protected TextField quantityTextField;
 
     @FXML
     protected ComboBox<Product> productComboBox;
+
+    @FXML
+    protected TextField totalPriceTextField;
+
+    protected Optional<T> record; // записа на диалога
 
     // Продукти
     protected ObservableList<Product> productsList;
@@ -38,6 +42,7 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T>{
     protected void additionalDialogInitialization() {
         setOnShowing(dialogEvent -> Platform.runLater(() -> productComboBox.requestFocus()));
 
+        this.totalPriceTextField.setDisable(true);
         productComboBox.setConverter(new EntityStringConverter<>());
         initializeQuantityFields();
     }
@@ -68,12 +73,16 @@ public abstract class BaseTradeDialog<T> extends BaseRecordDialog<T>{
 
     @Override
     protected void validateDialog(Button okButton) { // валидираме полетата на диалога
-        okButton.disableProperty()
-                .bind(Bindings.createBooleanBinding(
-                        this::checkForInvalidFields,
-                        quantityTextField.textProperty(),
-                        productComboBox.valueProperty()
-                )); // ако има празно поле ОК е disable-нато
+        quantityTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                okButton.setDisable(!this.validateQuantity(newValue));
+        });
+    }
+
+    protected boolean validateQuantity(String newValue) {
+        if (this.productComboBox == null || this.productComboBox.getValue() == null)
+            return false;
+
+        return true;
     }
 
     private boolean checkForInvalidFields() {

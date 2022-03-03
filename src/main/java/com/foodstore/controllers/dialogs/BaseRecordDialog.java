@@ -45,7 +45,7 @@ public abstract class BaseRecordDialog<T> extends Dialog<T> {
 
         // Валидация на диалог
         final Button okButton = (Button) getDialogPane().lookupButton(okayButtonType);
-        okButton.setDisable(true);
+        okButton.setDisable(false);
 
         // Стилове на диалог
         getDialogPane().getStylesheets().add(DIALOG_STYLES_ADDRESS);

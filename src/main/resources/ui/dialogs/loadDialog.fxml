@@ -14,6 +14,9 @@
                 <Label text="Количество на зареждане:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <TextField fx:id="quantityTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="0"/>
 
+                <Label text="Цена на зареждането:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="totalPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="1"/>
+
                 <columnConstraints>
                     <ColumnConstraints />
                     <ColumnConstraints hgrow="ALWAYS" />
