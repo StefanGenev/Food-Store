@@ -197,14 +197,24 @@ public class ProductController extends ModifiableTablePageController<Product> {
     private void sellProduct(TableRow<Product> selectedRow) {
         Optional<StoreStock> dialogParam = openDialogEntry(selectedRow);
 
-        // отваряме диалога //TODO количество в момента
+        // взимаме Текуща наличност към днешна дата
+        ObservableList<StoreStock> ssCurrentDate =  FXCollections.observableArrayList();
+        ssCurrentDate.addAll(this.storeStockService.takeCurrentDateAvailability());
+
+        // взимаме избрания продукт от листа
+        for (int i = 0; i < ssCurrentDate.size(); i++) {
+            if(ssCurrentDate.get(i).getProduct().getId() == selectedRow.getItem().getId()){
+                dialogParam = Optional.of(ssCurrentDate.get(i));
+                break;
+            }
+        }
+
+        // отваряме диалога
         Window owner = Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
         SaleDialog saleDialog = new SaleDialog(owner, dialogParam);
 
-        // подаваме му листа с продуктите
-        ObservableList<Product> productsList = FXCollections.observableArrayList();
-        productsList.addAll(this.productService.findAllRecords());
-        saleDialog.setProducts(productsList);
+        // подаваме storeStocks на comboBox-а
+        saleDialog.setStoreStocks(ssCurrentDate);
 
         // чакаме отговор от диалога
         dialogParam = saleDialog.showAndWait();

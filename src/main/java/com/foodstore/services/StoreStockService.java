@@ -147,6 +147,10 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
         }
     }
 
+    public Optional<StoreStock> getStoreStockByProductAndAvailabilityDate(Product product, LocalDate availabilityDate) {
+        return this.storeStockRepository.findStoreStockByProductAndAvailabilityDate(product, availabilityDate);
+    }
+
     @Override
     public List<StoreStock> findAllRecords() { // актуализира наличността към днешна дата и връща всички записи
         this.updateStoreStocks(); // актуализира наличността към днешна дата
@@ -172,6 +176,7 @@ public class StoreStockService implements ModifiableRegister<StoreStock> {
         return this.storeStockRepository.findStoreStockByCategoryForDate(filter);
     }
 
+    // наличност към днешна дата
     public List<StoreStock> takeCurrentDateAvailability() {
         this.updateStoreStocks(); // актуализира наличността към днешна дата
         return this.storeStockRepository.findStoreStockForCurrentDate();

@@ -16,6 +16,6 @@ public class StringDoubleConverter extends StringConverter<Double> {
 
     @Override
     public String toString(Double d) {
-        return d.toString();
+        return String.format("%.2f", d);
     }
 }

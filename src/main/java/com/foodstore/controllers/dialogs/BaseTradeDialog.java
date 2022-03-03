@@ -2,10 +2,9 @@ package com.foodstore.controllers.dialogs;
 
 import com.foodstore.models.Product;
 import com.foodstore.models.StoreStock;
+import com.foodstore.utils.DoubleFormatFilter;
 import com.foodstore.utils.EntityStringConverter;
-import com.foodstore.utils.IntegerFormatFilter;
 import com.foodstore.utils.converters.StringDoubleConverter;
-import com.foodstore.utils.converters.StringIntegerConverter;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -59,6 +58,7 @@ public abstract class BaseTradeDialog extends BaseRecordDialog<StoreStock> {
         this.totalPriceTextField.setDisable(true);
         productComboBox.setConverter(new EntityStringConverter<>());
         initializeQuantityFields();
+        initializePriceField();
 
         // При промяна на селектиран продукт
         productComboBox.valueProperty().addListener((observable, oldValue, newValue) -> onChangeSelectedProduct(newValue));
@@ -74,12 +74,12 @@ public abstract class BaseTradeDialog extends BaseRecordDialog<StoreStock> {
         productComboBox.setItems(this.productsList);
     }
 
-    private void initializeQuantityFields() {
-        UnaryOperator<TextFormatter.Change> filter = new IntegerFormatFilter();
-        StringConverter<Integer> stringIntegerConverter = new StringIntegerConverter();
+    protected void initializeQuantityFields() {
+        UnaryOperator<TextFormatter.Change> filter = new DoubleFormatFilter();
+        StringConverter<Double> stringDoubleConverter = new StringDoubleConverter();
 
         // Позволяваме писане само на целочислени стойности в полето за количество
-        TextFormatter<Integer> quantityFormatter = new TextFormatter<>(stringIntegerConverter, 0, filter);
+        TextFormatter<Double> quantityFormatter = new TextFormatter<Double>(stringDoubleConverter, 0d, filter);
         this.quantityTextField.setTextFormatter(quantityFormatter);
     }
 
@@ -116,10 +116,15 @@ public abstract class BaseTradeDialog extends BaseRecordDialog<StoreStock> {
     }
 
     protected void setTotalPriceField(Product product) { // цена на зареждането = количество * цена 1 ед.
-        StringIntegerConverter stringIntegerConverter = new StringIntegerConverter();
-        int quantity = stringIntegerConverter.fromString(this.quantityTextField.getText());
 
-        double totalPrice = quantity * product.getLoadPrice();
-        this.totalPriceTextField.setText(new StringDoubleConverter().toString(totalPrice));
+    }
+
+    protected void initializePriceField(){
+        UnaryOperator<TextFormatter.Change> filter = new DoubleFormatFilter();
+        StringConverter<Double> stringDoubleConverter = new StringDoubleConverter();
+
+        // Позволяваме писане само на числени стойности в полета за цени
+        TextFormatter<Double> loadPriceFormatter = new TextFormatter<>(stringDoubleConverter, 0.0, filter);
+        this.totalPriceTextField.setTextFormatter(loadPriceFormatter);
     }
 }

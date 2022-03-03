@@ -1,8 +1,8 @@
 package com.foodstore.controllers.dialogs;
 
+import com.foodstore.models.Product;
 import com.foodstore.models.StoreStock;
 import com.foodstore.utils.converters.StringDoubleConverter;
-import com.foodstore.utils.converters.StringIntegerConverter;
 import javafx.scene.control.Button;
 import javafx.stage.Window;
 
@@ -52,7 +52,7 @@ public class LoadDialog extends BaseTradeDialog {
         if (this.currentCash == null)
             return false;
 
-        double cost = new StringIntegerConverter().fromString(newValue) * this.productComboBox.getValue().getLoadPrice();
+        double cost = new StringDoubleConverter().fromString(newValue) * this.productComboBox.getValue().getLoadPrice();
         this.totalPriceTextField.setText(new StringDoubleConverter().toString(cost));
         if (!validateAvailableCash(cost))
             return false;
@@ -66,5 +66,14 @@ public class LoadDialog extends BaseTradeDialog {
             return false;
 
         return true;
+    }
+
+    @Override
+    protected void setTotalPriceField(Product product) { // цена на зареждането = количество * цена 1 ед.
+        StringDoubleConverter stringDoubleConverter = new StringDoubleConverter();
+        double quantity = stringDoubleConverter.fromString(this.quantityTextField.getText());
+
+        double totalPrice = quantity * product.getLoadPrice();
+        this.totalPriceTextField.setText(new StringDoubleConverter().toString(totalPrice));
     }
 }

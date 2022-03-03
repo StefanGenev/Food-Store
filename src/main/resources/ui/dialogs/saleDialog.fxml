@@ -8,14 +8,17 @@
         <VBox prefHeight="382.0" prefWidth="353.0" spacing="5.0">
             <GridPane hgap="2" vgap="2">
                 <Label text="Продукт:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <ComboBox fx:id="productComboBox" promptText="Избери продукт" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <ComboBox fx:id="storeStockComboBox" promptText="Избери продукт" GridPane.columnIndex="1" GridPane.rowIndex="0">
                 </ComboBox>
 
-                <Label text="Количество на зареждане:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="quantityTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="0"/>
+                <Label text="Количество на продажба:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="quantityTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="1"/>
 
-                <Label text="Цена на зареждането:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <TextField fx:id="totalPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="1"/>
+                <Label text="Общо количество:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="totalQuantityTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" promptText="0"/>
+
+                <Label text="Цена на продажба:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <TextField fx:id="totalPriceTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="1"/>
 
                 <columnConstraints>
                     <ColumnConstraints />
