@@ -79,6 +79,11 @@
     -fx-background-color: transparent;
 }
 
+.table-view *.scroll-bar:vertical *.increment-arrow,
+.table-view *.scroll-bar:vertical *.decrement-arrow {
+    -fx-background-color: -fx-white-color;
+}
+
 // Hide horizontal scrollbar
 .table-view *.scroll-bar:horizontal *.increment-arrow,
 .table-view *.scroll-bar:horizontal *.decrement-arrow {
